@@ -1,0 +1,93 @@
+@font-face {
+    font-family: 'noita pixel';
+    src: url(font/NoitaPixel.ttf);
+}
+
+@font-face {
+    font-family: 'noita title';
+    src: url(font/NoitaBlackletter-Regular.ttf);
+}
+
+main{
+    margin-left: 12%;
+    margin-right: 12%;  
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    margin: 0;
+    background-color: #191529;
+    background-image: url(img/menu-background.png);
+    background-repeat: no-repeat;
+}
+
+h1{
+    font-size: 88px;
+}
+
+h2{
+    font-size: 64px;
+}
+nav{
+    margin-bottom: 4%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.nav-title{
+    font-size: 48px;
+}
+
+.np-font{
+    font-family: 'noita pixel';
+}
+
+.nt-font{
+    font-family: 'noita title';
+    background: -webkit-linear-gradient(#ffd357, #ff2d3d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px #102055); 
+}
+
+.n-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.n-column{
+    display:flex; flex-direction:column;
+    text-align: center;
+    align-items: center;
+}
+
+.n-box{
+    display:flex; flex-direction:column;
+    border-radius: 2px;
+    padding: 8px;
+    text-align: center;
+    align-items: center;
+    outline: #948064 solid 2px;
+    margin: 6px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.n-title{
+    font-size: 64px;
+}
+
+.n-btn{
+
+}
+
+.n-btn-title{
+    font-size: 48px;
+}
+
+.n-btn:hover{
+    transition: 0.1s;
+    background-color: rgba(50, 50, 50, 1);
+}

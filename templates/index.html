@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %} Noita Builds{% endblock %}
+{%block main%}
+<div class="n-container">
+    <a href="" class="n-btn n-box n-container">
+        <img src="static/img/64px-Item_book.png" height="64" width="64">
+        <span class="n-btn-title np-font">Search Builds</span>
+    </a>
+
+    <a href="/builds/create" class="n-btn n-box n-container" style="margin-left: 2%;">
+        <img src="static/img/42px-Spell_heal_bullet.png" height="64" width="64">
+        <span class="n-btn-title np-font">Create Build</span>
+    </a>
+</div>
+
+<div class="n-box n-container">
+    <span class="nt-font n-title">Recent Builds</span>
+</div>
+{% endblock %}

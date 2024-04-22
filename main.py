@@ -4,13 +4,15 @@ report={
     "report": "",
     "reported": "",
     "post-id": "",
+    "date" : ""
 }
 comment={
     "author": "",
     "content": "",
     "parent-id": 0,
     "id": 0,
-    "layer" : 0
+    "layer" : 0,
+    "date" : ""
 }
 
 build={
@@ -59,8 +61,12 @@ def search_name(name):
     else:
         return result
 
-def create_comment(post_id, type, content, parent_layer, author):
+def create_comment(post_id, type, content, parent_layer, author, date):
     new_comment = {}
+    if len(content.replace(" ", "")) == 0:
+        return "Error 4: No text inserted."
+    if len(content) > 400:
+        return "Error 5: Comment too long."
     r = open('latest.txt', encoding="utf8")
     id = int(json.load(r))
     r.close()
@@ -77,16 +83,22 @@ def create_comment(post_id, type, content, parent_layer, author):
     new_comment["parent-id"] = post_id
     new_comment["id"] = id
     new_comment["author"] = author
+    new_comment["date"] = date
     f = open('dbc.json', 'w', encoding="utf8")
     json.dump(new_comment, f, indent=2, sort_keys=True)
     f.close()
 
-def create_report(post_id, user, reported, reason):
+def create_report(post_id, user, reported, reason, date):
     new_report = {}
+    if len(reason.replace(" ", "")) == 0:
+        return "Error 4: No text inserted."
+    if len(reason) > 400:
+        return "Error 6: Reason too long."
     new_report["post-id"] = post_id
     new_report["user"] = user
     new_report["reported"] = reported
     new_report["reason"] = reason
+    new_report["date"] = date
     f = open('dbr.json', 'w', encoding="utf8")
     json.dump(new_report, f, indent=2, sort_keys=True)
     f.close()

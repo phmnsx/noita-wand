@@ -1,12 +1,18 @@
 import json
+report={
+    "user": "",
+    "report": "",
+    "reported": "",
+    "post-id": "",
+}
 comment={
-    "author": ""
-    "parent-type": ""
-    "content": ""
-    "parent-id": 0
-    "id": 0
+    "author": "",
+    "content": "",
+    "parent-id": 0,
+    "id": 0,
     "layer" : 0
 }
+
 build={
     "title": "",
     "image": "",
@@ -53,9 +59,34 @@ def search_name(name):
     else:
         return result
 
-def create_comment(post_id, type, content, layer)
+def create_comment(post_id, type, content, parent_layer, author):
     new_comment = {}
-    if type == "post"
-        new_comment["]
-    elif type == "comment"
-    #bla bla
+    r = open('latest.txt', encoding="utf8")
+    id = int(json.load(r))
+    r.close()
+    new_comment["id"] = id
+    r = open('latest.txt', 'w', encoding="utf8")
+    id = id + 1
+    r.write(str(id))
+    r.close()
+    if type == "post":
+        new_comment["layer"] = 0
+    elif type == "comment":
+        new_comment["layer"] = parent_layer + 1
+    new_comment["content"] = content
+    new_comment["parent-id"] = post_id
+    new_comment["id"] = id
+    new_comment["author"] = author
+    f = open('dbc.json', 'w', encoding="utf8")
+    json.dump(new_comment, f, indent=2, sort_keys=True)
+    f.close()
+
+def create_report(post_id, user, reported, reason):
+    new_report = {}
+    new_report["post-id"] = post_id
+    new_report["user"] = user
+    new_report["reported"] = reported
+    new_report["reason"] = reason
+    f = open('dbr.json', 'w', encoding="utf8")
+    json.dump(new_report, f, indent=2, sort_keys=True)
+    f.close()

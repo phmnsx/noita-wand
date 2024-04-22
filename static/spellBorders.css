@@ -1,0 +1,70 @@
+.spell-slot{
+    width: 32px; height: 32px;
+    margin: 4%;
+    outline: rgba(79, 50, 45, 0.7) dashed 2px;
+}
+
+#spell-slots{
+    margin-top: 4%;
+    margin-bottom: 4%;
+    width: 95%;
+    display: grid;
+    row-gap: 32px;
+    column-gap: 32px;
+    padding: 14px;
+    grid-template-columns: 16px 16px 16px 16px 16px 16px 16px 16px 16px 16px 16px 16px 16px;
+    background-color: #372724;
+    outline: rgba(79, 50, 45, 1) dashed 6px;
+}
+
+.type-projectile{
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(90,35,35,0.5) 70%, rgba(90,35,35,0.5) 100%);
+    outline: rgba(90,35,35,1) solid 2px;
+    border-radius: 2px;
+}
+
+.type-static-projectile{
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(141,63,24,0.5) 70%, rgba(141,63,24,0.5) 100%);
+    outline: rgba(141,63,24,1) solid 2px;
+    border-radius: 2px;
+}
+
+.type-passive{
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(33,47,38,0.5) 70%, rgba(33,47,38,0.5) 100%);
+    outline: rgba(33,47,38,1) solid 2px;
+    border-radius: 2px;
+}
+
+.type-utility{
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(123,42,116,0.5) 70%, rgba(123,42,116,0.5) 100%);
+    outline: rgba(123,42,116,1) solid 2px;
+    border-radius: 2px;
+}
+
+.type-modifier-projectile{
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(45,58,114,0.5) 70%, rgba(45,58,114,0.5) 100%);
+    outline: rgba(45,58,114,1) solid 2px;
+    border-radius: 2px;
+}
+
+.type-material{
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(53,111,68,0.5) 70%, rgba(53,111,68,0.5) 100%);
+    outline: rgba(53,111,68,1) solid 2px;
+    border-radius: 2px;
+ 
+}
+
+.type-multicast{
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(28,109,115,0.5) 70%, rgba(28,109,115,0.5) 100%);
+    outline: rgba(28,109,115,1) solid 2px;
+    border-radius: 2px;
+}
+
+.type-other{
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(113,75,51,0.5) 70%, rgba(113,75,51,0.5) 100%);
+    outline: rgba(113,75,51,    1) solid 2px;
+    border-radius: 2px;
+}

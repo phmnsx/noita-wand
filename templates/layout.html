@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="/static/main.css"  rel="stylesheet" >
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <nav>
+            <span class="nt-font nav-title" style="margin-left: 18px;">
+                <a href="/">Noita Builds</a>
+            </span>
+        </nav>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+    </body>
+</html>

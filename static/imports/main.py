@@ -1,5 +1,12 @@
 import json
-
+comment={
+    "author": ""
+    "parent-type": ""
+    "content": ""
+    "parent-id": 0
+    "id": 0
+    "layer" : 0
+}
 build={
     "title": "",
     "image": "",
@@ -45,3 +52,10 @@ def search_name(name):
         return "No results."
     else:
         return result
+
+def create_comment(post_id, type, content, layer)
+    new_comment = {}
+    if type == "post"
+        new_comment["]
+    elif type == "comment"
+    #bla bla

@@ -10,17 +10,22 @@ build={
     "description": "",
     "date": ""
 }
-
+title = "dd"
+image = 0
+author = "dddd"
+spells = ["spark" , "damage"]
+date = "dddd"
+description = "very simple spark damage ! so fun !"
 def create(title, image, author, spells, date, description):
 
-    r = open('static/imports/db.json', encoding="utf8")
+    r = open('db.json', encoding="utf8")
     items = json.load(r)
     r.close()
 
     build["title"] = title
     build["image"] = image
     build["author"] = author
-    r = open('static/imports/latest.txt', encoding="utf8")
+    r = open('latest.txt', encoding="utf8")
     id = int(json.load(r))
     r.close()
     build["id"] = id
@@ -33,6 +38,8 @@ def create(title, image, author, spells, date, description):
     build["date"] = date
     build["description"] = description
     items.append(build)
-    f = open('static/imports/db.json', 'w', encoding="utf8")
+    f = open('db.json', 'w', encoding="utf8")
     json.dump(items, f, indent=2, sort_keys=True)
     f.close()
+
+create(title, image, author, spells, date, description)

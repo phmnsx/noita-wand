@@ -1,4 +1,11 @@
 import json
+users={
+    "id": "",
+    "name": "",
+    "builds": [],
+    "liked-posts": []
+
+}
 report={
     "user": "",
     "report": "",
@@ -14,11 +21,11 @@ comment={
     "layer" : 0,
     "date" : ""
 }
-
 build={
     "title": "",
     "image": "",
     "author": "",
+    "author-id": "",
     "id": 0,
     "spells": [],
     "size": 0,
@@ -101,4 +108,21 @@ def create_report(post_id, user, reported, reason, date):
     new_report["date"] = date
     f = open('dbr.json', 'w', encoding="utf8")
     json.dump(new_report, f, indent=2, sort_keys=True)
+    f.close()
+
+def like(user_id, post_id):
+    f = open('dbusers.json', encoding="utf8")
+    users = json.load(f)
+    f.close()
+    loop = 0
+    for person in users:
+        if users[loop]["id"] == user_id:
+            break
+    loop =+ 1
+    if post_id in users[loop]["liked-posts"]:
+        users[loop]["liked-posts"].remove(post_id)
+    else:
+        users[loop]["liked-posts"].append(post_id)
+    f = open('dbusers.json', 'w', encoding="utf8")
+    json.dump(users, f, indent=2, sort_keys=True)
     f.close()

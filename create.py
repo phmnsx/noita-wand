@@ -2,7 +2,6 @@ import json
 build={
     "title": "",
     "image": "",
-    "author": "",
     "id": 0,
     "spells": [],
     "size": 0,
@@ -10,7 +9,7 @@ build={
     "description": "",
     "date": ""
 }
-def create(title, image, author, spells, date, description, authorid):
+def create(title, image, spells, date, description, authorid):
 
     r = open('db.json', encoding="utf8")
     items = json.load(r)
@@ -18,7 +17,6 @@ def create(title, image, author, spells, date, description, authorid):
     build["author-id"] = authorid
     build["title"] = title
     build["image"] = image
-    build["author"] = author
     r = open('latest.txt', encoding="utf8")
     id = int(json.load(r))
     r.close()

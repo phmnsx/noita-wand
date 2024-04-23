@@ -21,7 +21,7 @@ body{
     margin: 0;
     background-color: #191529;
     background-image: url(img/menu-background.png);
-    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1{
@@ -65,11 +65,8 @@ nav{
 }
 
 .n-box{
-    display:flex; flex-direction:column;
     border-radius: 2px;
     padding: 8px;
-    text-align: center;
-    align-items: center;
     outline: #948064 solid 2px;
     margin: 6px;
     color: white;
@@ -90,4 +87,43 @@ nav{
 .n-btn:hover{
     transition: 0.1s;
     background-color: rgba(50, 50, 50, 1);
+}
+
+.pi-image{
+    image-rendering: pixelated; 
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges; 
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+/*TOOLTIP CSS*/
+.n-tooltip {
+    text-decoration: none;
+    position: relative;
+}
+
+a.n-tooltip .n-tooltip-content {
+    display: none;
+    z-index: 1000;
+}
+
+a.n-tooltip .n-tooltip-content-text {
+    display: none;
+    z-index: 1000;
+}
+
+a.n-tooltip:hover{
+    cursor: pointer;
+}
+a.n-tooltip:hover .n-tooltip-content {
+    display: flex;
+    position: absolute;
+    bottom: 100%;
+}
+
+a.n-tooltip:hover .n-tooltip-content-text{
+    display: block;
+    position: fixed;
 }

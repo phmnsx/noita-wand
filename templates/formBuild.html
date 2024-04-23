@@ -6,15 +6,6 @@
     <link href="/static/spellBorders.css"  rel="stylesheet" >
 </head>
 <style>
-    .pi-image{
-        image-rendering: pixelated; 
-        image-rendering: -moz-crisp-edges;
-        image-rendering: crisp-edges; 
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-    }
-
     .wand-icon{
         width: 128px; height: 64px;
     }
@@ -37,43 +28,9 @@
         width: 32px; height: 32px;
     }
 
-    span, .np-font{
-        font-size: 14px;
-    }
-
-    /*TOOLTIP CSS*/
-    .tooltip {
-        text-decoration: none;
-        position: relative;
-    }
-    
-    a.tooltip .tooltip-content {
-        display: none;
-        z-index: 1000;
-    }
-    
-    a.tooltip .tooltip-content-text {
-        display: none;
-        z-index: 1000;
-    }
-
-    a.tooltip:hover{
-        cursor: pointer;
-    }
-    a.tooltip:hover .tooltip-content {
-        display: flex;
-        position: absolute;
-        bottom: 100%;
-    }
-
-    a.tooltip:hover .tooltip-content-text{
-        display: block;
-        position: fixed;
-        overflow: hidden;
-    }
 </style>
 <script>
-    var tooltips = [].slice.call(document.querySelectorAll('.tooltip'))
+    var tooltips = [].slice.call(document.querySelectorAll('.n-tooltip'))
     var addedSpells = []
     const SPELLS = {{spells | tojson}};
 
@@ -88,7 +45,7 @@
         for (let i=0; i < parseInt(amount); i++){
             if (typeof addedSpells[i] !== 'undefined'){
                 document.getElementById('spell-slots').innerHTML += `<div class="spell-slot" onclick="removeSpell(${i})">
-                    <div class="pi-image ${SPELLS[addedSpells[i]-1].css_type} spell-item" style="width:100%; height:100%; background-image: url(/static/img/spells/${SPELLS[addedSpells[i]-1].img}"></div>
+                    <div class="pi-image ${SPELLS[addedSpells[i]-1].css_type} spell-item" style="background-size: cover;background-image: url(/static/img/spells/${SPELLS[addedSpells[i]-1].img}"></div>
                 </div>`
             } else{
                 document.getElementById('spell-slots').innerHTML += `<div class="spell-slot" onclick="removeSlot()"></div>`
@@ -127,7 +84,7 @@
 </script>
 <form method="POST">
     <div class="n-container">
-        <div class="n-box" style="margin-right: 4%; text-align:center; width:80%">
+        <div class="n-box" text-align:center; width:80%">
             <div class="n-column">
                 <label for="build-title" class="np-font" required>Title</label>
                 <input id="build-title" name="build-title" type="text" class="np-font n-box">
@@ -135,9 +92,9 @@
                 <span class="np-font">Icon</span>
                 <div class="n-box">
                     <div id="wandImage" class="pi-image wand-icon" style="background-image: url(/static/img/wands/wand_0000.png);"></div>
-                    <a onclick="randomWand()" class="tooltip">
+                    <a onclick="randomWand()" class="n-tooltip">
                         <img class="pi-image" src="/static/img/faster_wands.png" width="24px">
-                        <span class="tooltip-content-text n-box np-font" style="background-color: black;">Randomize a wand icon</span>
+                        <span class="n-tooltip-content-text n-box np-font" style="top: 55%; left:15%;background-color: black;">Randomize a wand icon</span>
                     </a>
                     <input id="build-icon" name="build-icon" type="text" value="" hidden>
                 </div>
@@ -153,7 +110,7 @@
         </div>
     
         
-        <div class="n-box" style="width:100%">
+        <div class="n-box n-column p-5" style="width:100%">
             <span class="np-font" style="font-size: 32px;">Insert the wand's spells</span>
             <span class="np-font">Spells</span>
             <input id="spell-list" type="text" name="spell-list" value="" hidden>
@@ -162,21 +119,21 @@
             <span class="np-font">Spell list</span>
             <div class="spell-menu">
                 {% for spell in spells %} 
-                <a class="tooltip spell-item {{spell['css_type']}}" onclick="addSpell({{loop.index}})">
+                <a class="n-tooltip spell-item {{spell['css_type']}}" onclick="addSpell({{loop.index}})">
                     {{spell['img_html'] | safe}}
 
-                    <div class="n-box tooltip-content" style="width: 256px; background-color: rgba(0,0,0,1);">
-                        <div style="display:flex; flex-direction:column; text-align: center; margin-right: 16%;">
-                            <span class="np-font" style="margin-bottom: 12%;">{{spell['title']}}</span>
-                            <span class="np-font" style="margin-bottom: 4%;">{{spell['description']}}</span>
+                    <div class="n-box n-tooltip-content" style="justify-content:center; width: 256px; background-color: rgba(0,0,0,1);">
+                        <div style="display:flex; flex-direction:column;">
+                            <span class="np-font">{{spell['title']}}</span>
+                            <br>
+                            <span class="np-font">{{spell['description']}}</span>
+                            <br>
                             <div style="display:flex; justify-content: space-between;">
                                 <span class="np-font">Type:</span> 
                                 <span class="np-font">{{spell['Type']}}</span>
                             </div>
                         </div>
-                        <div>
-                            {{spell['img-html'] | safe}}
-                        </div>
+
                     </div>
                 </a>
                 {% endfor %}

@@ -166,7 +166,7 @@ def like(user_id, post_id):
     for person in users:
         if users[loop]["id"] == user_id:
             break
-    loop =+ 1
+    loop += 1
     if post_id in users[loop]["liked-posts"]:
         users[loop]["liked-posts"].remove(post_id)
     else:
@@ -181,9 +181,10 @@ def get_user(user_id):
     f.close
     loop = 0
     for person in users:
+        print(person)
         if users[loop]["id"] == user_id:
             break
-        loop =+ 1
+        loop += 1
     else:
         return "User not found."
     return users[loop]

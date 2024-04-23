@@ -5,4 +5,4 @@
 
 -report system, moderacion ??
 
--CRUD em para todos os bancos de dados
+-CRUD em para todos os bancos de dados(update apenas pra os necessários)

@@ -192,8 +192,17 @@ def create_user(id, name):
     f = open('dbusers.json', encoding="utf8")
     users = json.load(f)
     f.close
-    users[len(users) + 1]["id"] = id
-    users[len(users) + 1]["name"] = name
+    newUser = {
+    "id": "",
+    "name": "",
+    "builds": [],
+    "liked-posts": []
+    }
+    
+    newUser["id"] = id
+    newUser["name"] = name
+
+    users.append(newUser)
     f = open('dbusers.json', 'w', encoding="utf8")
     json.dump(users, f, indent=2, sort_keys=True)
     f.close()

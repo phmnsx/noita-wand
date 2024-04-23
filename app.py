@@ -3,7 +3,8 @@ from flask import session as login_session
 import requests
 import json, random, string
 
-import create as db
+import create
+import main
 from static.imports.credentials import client_id, client_secret
 from helpers import login_required
 
@@ -29,10 +30,11 @@ def index():
             try:
                 resp = r.json()
                 login_session['user'] = resp
+                if main.get_user(login_session['user']['id']) == "User not found.":
+                    main.create_user(login_session['user']['id'], login_session['user']['login'])
             except AttributeError:
                 app.logger.debug('error getting username from github, whoops')
                 return "I don't know who you are; I should, but regretfully I don't", 500
-            
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in range(32))
     login_session['state'] = state
@@ -99,7 +101,7 @@ def createBuild():
         for spls in list(map(int,request.form.get('spell-list').split(","))):
             currentSpells.append(SPELLS[spls-1])
 
-        db.create(request.form.get('build-title'), 
+        create.create(request.form.get('build-title'), 
                   request.form.get('build-icon'), 
                   "EU", 
                   currentSpells,

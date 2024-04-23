@@ -181,7 +181,6 @@ def get_user(user_id):
     f.close
     loop = 0
     for person in users:
-        print(person)
         if users[loop]["id"] == user_id:
             break
         loop += 1

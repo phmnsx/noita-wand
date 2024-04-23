@@ -10,12 +10,6 @@ build={
     "description": "",
     "date": ""
 }
-title = "dd"
-image = 0
-author = "dddd"
-spells = ["spark" , "damage"]
-date = "dddd"
-description = "very simple spark damage ! so fun !"
 def create(title, image, author, spells, date, description, authorid):
 
     r = open('db.json', encoding="utf8")
@@ -57,4 +51,40 @@ def create(title, image, author, spells, date, description, authorid):
     json.dump(items, f, indent=2, sort_keys=True)
     f.close()
 
-create(title, image, author, spells, date, description, "2")
+def get_builds():
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close
+    return builds
+
+def edit_build(title, image, description, id):
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close
+    loop = 0
+    for build in builds:
+        if builds[loop]["id"] == id:
+            break
+    else:
+        return "Error 10: Build not found."
+    builds[loop]["title"] = title
+    builds[loop]["image"] = image
+    builds[loop]["description"] = description
+    f = open('db.json', 'w', encoding="utf8")
+    json.dump(builds, f, indent=2, sort_keys=True)
+    f.close()
+
+def delete_build(id):
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close
+    loop = 0
+    for build in builds:
+        if builds[loop]["id"] == id:
+            break
+    else:
+        return "Error 10: Build not found."
+    builds.pop(loop)
+    f = open('db.json', 'w', encoding="utf8")
+    json.dump(builds, f, indent=2, sort_keys=True)
+    f.close()

@@ -16,6 +16,7 @@ report={
 comment={
     "author": "",
     "content": "",
+    "is-deleted": 0,
     "parent-id": 0,
     "id": 0,
     "layer" : 0,
@@ -91,9 +92,56 @@ def create_comment(post_id, type, content, parent_layer, author, date):
     new_comment["id"] = id
     new_comment["author"] = author
     new_comment["date"] = date
-    f = open('dbc.json', 'w', encoding="utf8")
-    json.dump(new_comment, f, indent=2, sort_keys=True)
+    new_comment["is-deleted"] = 0
+    f = open('dbc.json', encoding="utf8")
+    ccomments = json.load(f)
     f.close()
+    ccomments.append(new_comment)
+    f = open('dbc.json', 'w', encoding="utf8")
+    json.dump(ccomments, f, indent=2, sort_keys=True)
+    f.close()
+
+def edit_comment(comment_id, content):
+    if len(content.replace(" ", "")) == 0:
+       return "Error 4: No text inserted."
+    if len(content) > 400:
+        return "Error 5: Comment too long."
+    f = open('dbc.json', encoding="utf8")
+    comments = json.load(f)
+    f.close
+    loop = 0
+    for comment in comments:
+        if comments[loop]["id"] == comment_id:
+            comments[loop]["content"] = content
+            break
+        loop += 1
+    else:
+        return "Error 8: Comment not found."
+    f = open('dbc.json', 'w', encoding="utf8")
+    json.dump(comments, f, indent=2, sort_keys=True)
+    f.close()
+
+def delete_comment(comment_id):
+    f = open('dbc.json', encoding="utf8")
+    comments = json.load(f)
+    f.close
+    loop = 0
+    for comment in comments:
+        if comments[loop]["id"] == comment_id:
+            comments[loop]["is-deleted"] == 1
+            break
+        loop += 1
+    else:
+        return "Error 8: Comment not found."
+    f = open('dbc.json', 'w', encoding="utf8") 
+    json.dump(comments, f, indent=2, sort_keys=True)
+    f.close()
+
+def return_comments():
+    f = open('dbc.json', encoding="utf8")
+    comments = json.load(f)
+    f.close
+    return comments
 
 def create_report(post_id, user, reported, reason, date):
     new_report = {}
@@ -126,3 +174,16 @@ def like(user_id, post_id):
     f = open('dbusers.json', 'w', encoding="utf8")
     json.dump(users, f, indent=2, sort_keys=True)
     f.close()
+
+def get_user(user_id):
+    f = open('dbusers.json', encoding="utf8")
+    users = json.load(f)
+    f.close
+    loop = 0
+    for person in users:
+        if users[loop]["id"] == user_id:
+            break
+        loop =+ 1
+    else:
+        return "User not found."
+    return users[loop]

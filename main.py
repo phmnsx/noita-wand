@@ -187,3 +187,13 @@ def get_user(user_id):
     else:
         return "User not found."
     return users[loop]
+
+def create_user(id, name):
+    f = open('dbusers.json', encoding="utf8")
+    users = json.load(f)
+    f.close
+    users[len(users) + 1]["id"] = id
+    users[len(users) + 1]["name"] = name
+    f = open('dbusers.json', 'w', encoding="utf8")
+    json.dump(users, f, indent=2, sort_keys=True)
+    f.close()

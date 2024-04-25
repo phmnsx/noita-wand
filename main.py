@@ -84,7 +84,7 @@ def create_comment(post_id, type, content, parent_layer, author, date):
     id = id + 1
     r.write(str(id))
     r.close()
-    if type == "post":
+    if type == "build":
         new_comment["layer"] = 0
     elif type == "comment":
         new_comment["layer"] = parent_layer + 1

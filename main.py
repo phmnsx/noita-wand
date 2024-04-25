@@ -1,6 +1,7 @@
 import json
 users={
     "id": "",
+    "img": "",
     "name": "",
     "builds": [],
     "liked-posts": []
@@ -188,19 +189,21 @@ def get_user(user_id):
         return "User not found."
     return users[loop]
 
-def create_user(id, name):
+def create_user(id, name, img):
     f = open('dbusers.json', encoding="utf8")
     users = json.load(f)
     f.close
     newUser = {
     "id": "",
     "name": "",
+    "img": "",
     "builds": [],
     "liked-posts": []
     }
     
     newUser["id"] = id
     newUser["name"] = name
+    newUser["img"] = img
 
     users.append(newUser)
     f = open('dbusers.json', 'w', encoding="utf8")

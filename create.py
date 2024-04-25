@@ -21,9 +21,6 @@ def create(title, image, spells, date, description, authorid):
     id = int(json.load(r))
     r.close()
     build["id"] = id
-    r = open('latest.txt', 'w', encoding="utf8")
-    id = id + 1
-    r.write(str(id))
     r.close()
     build["spells"] = spells
     build["size"] = len(build["spells"])
@@ -42,6 +39,9 @@ def create(title, image, spells, date, description, authorid):
     else:
         return "Error 6: User not found"
     f.close()
+    r = open('latest.txt', 'w', encoding="utf8")
+    id = id + 1
+    r.write(str(id))
     f = open('dbusers.json', 'w', encoding="utf8")
     json.dump(users, f, indent=2, sort_keys=True)
     f.close()

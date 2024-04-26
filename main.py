@@ -209,3 +209,13 @@ def create_user(id, name, img):
     f = open('dbusers.json', 'w', encoding="utf8")
     json.dump(users, f, indent=2, sort_keys=True)
     f.close()
+
+def get_comments(id):
+    f = open('dbc.json', encoding="utf8")
+    comments = json.load(f)
+    f.close
+    result = []
+    for comment in comments:
+        if comment["parent-id"] == id:
+            result.append(comment)
+    return result

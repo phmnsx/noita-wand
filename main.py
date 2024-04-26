@@ -70,7 +70,7 @@ def search_name(name):
     else:
         return result
 
-def create_comment(post_id, type, content, parent_layer, author, date):
+def create_comment(parent_id, type, content, parent_layer, author, date):
     new_comment = {}
     if len(content.replace(" ", "")) == 0:
         return "Error 4: No text inserted."
@@ -89,7 +89,7 @@ def create_comment(post_id, type, content, parent_layer, author, date):
     elif type == "comment":
         new_comment["layer"] = parent_layer + 1
     new_comment["content"] = content
-    new_comment["parent-id"] = post_id
+    new_comment["parent-id"] = parent_id
     new_comment["id"] = id
     new_comment["author"] = author
     new_comment["date"] = date

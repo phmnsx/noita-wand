@@ -15,7 +15,7 @@ report={
     "date" : ""
 }
 comment={
-    "author": "",
+    "author-id": "",
     "content": "",
     "is-deleted": 0,
     "parent-id": 0,
@@ -71,7 +71,7 @@ def search_name(name):
     else:
         return result
 
-def create_comment(parent_id, type, content, parent_layer, author, date, build_id):
+def create_comment(parent_id, type, content, parent_layer, author_id, date, build_id):
     new_comment = {}
     if len(content.replace(" ", "")) == 0:
         return "Error 4: No text inserted."
@@ -93,7 +93,7 @@ def create_comment(parent_id, type, content, parent_layer, author, date, build_i
     new_comment["parent-id"] = parent_id
     new_comment["id"] = id
     new_comment["build-id"] = build_id
-    new_comment["author"] = author
+    new_comment["author-id"] = author
     new_comment["date"] = date
     new_comment["is-deleted"] = 0
     f = open('dbc.json', encoding="utf8")

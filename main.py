@@ -218,6 +218,6 @@ def get_comments(id):
     f.close
     result = []
     for comment in comments:
-        if comment["parent-id"] == id:
+        if comment["build-id"] == id:
             result.append(comment)
     return result

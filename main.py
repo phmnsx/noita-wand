@@ -19,6 +19,7 @@ comment={
     "content": "",
     "is-deleted": 0,
     "parent-id": 0,
+    "build-id": 0,
     "id": 0,
     "layer" : 0,
     "date" : ""
@@ -70,7 +71,7 @@ def search_name(name):
     else:
         return result
 
-def create_comment(parent_id, type, content, parent_layer, author, date):
+def create_comment(parent_id, type, content, parent_layer, author, date, build_id):
     new_comment = {}
     if len(content.replace(" ", "")) == 0:
         return "Error 4: No text inserted."
@@ -91,6 +92,7 @@ def create_comment(parent_id, type, content, parent_layer, author, date):
     new_comment["content"] = content
     new_comment["parent-id"] = parent_id
     new_comment["id"] = id
+    new_comment["build-id"] = build_id
     new_comment["author"] = author
     new_comment["date"] = date
     new_comment["is-deleted"] = 0

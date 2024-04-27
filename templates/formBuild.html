@@ -38,9 +38,10 @@
         updateDate()
         document.getElementById("build-icon").value = "0000";
     }
+
     const submit = () => {
         updateDate()
-        document.querySelector("#form").submit()
+        document.getElementById("form").submit()
     }
 
     const defineSpellsSlots = () => {
@@ -116,7 +117,7 @@
             <input id="spell-slots-value" name="spell-slots-value" type="number" value="1" hidden>
             <input id="build-date" name="build-date" type="text" hidden>
             <br> 
-            <input onclick="submit()" type="button" id="submit">
+            <input onclick="submit()" type="button" value="send">
         </div>
     
         

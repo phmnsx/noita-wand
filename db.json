@@ -5,7 +5,7 @@
     "description": "asd",
     "id": 46,
     "image": "0000",
-    "likes": 0,
+    "likes": 1,
     "size": 3,
     "spells": [
       "LANCE_HOLY",
@@ -20,7 +20,7 @@
     "description": "adasdasdasdasd",
     "id": 47,
     "image": "0453",
-    "likes": 0,
+    "likes": 1,
     "size": 5,
     "spells": [
       "ICEBALL",
@@ -30,5 +30,18 @@
       "TAU"
     ],
     "title": "Outra build"
+  },
+  {
+    "author-id": "71940808",
+    "date": "Fri Apr 26 2024 23:47:18",
+    "description": "asd",
+    "id": 62,
+    "image": "0000",
+    "likes": 1,
+    "size": 1,
+    "spells": [
+      "ACIDSHOT"
+    ],
+    "title": "dsa"
   }
 ]

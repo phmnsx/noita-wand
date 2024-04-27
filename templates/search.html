@@ -122,7 +122,7 @@
         </div>
 
         <form id="form-{{bld['id']}}" class="d-flex align-items-center m-4" method="POST" action="/addComment/{{bld['id']}}?state={{state}}">
-            <img class="rounded-circle mx-3" src="{{login_session['user']['avatar_url']}}" height="48px">
+            <img class="rounded-circle mx-3" src="{{login_session['user']['img']}}" height="48px">
             <textarea
                 id="comment-{{bld['id']}}"
                 name="comment"

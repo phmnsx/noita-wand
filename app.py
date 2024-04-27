@@ -23,7 +23,7 @@ request_url = 'https://api.github.com'
 COMMENT_POST = "build"
 COMMENT_REPLY = "comment"
 
-def updateUser():
+def startUser():
     resp = {}
     access_token_url = request_url + '/user'
     headers = {
@@ -34,21 +34,31 @@ def updateUser():
 
     try:
         resp = r.json()
-        login_session['user'] = resp
-        login_session['user']['id'] = str(login_session['user']['id'])
-        id_str = login_session['user']['id']
-        login_session['user']['liked-posts'] = main.get_user(id_str)['liked-posts']
-        print(login_session['user']['liked-posts'])
+        id_str = str(resp['id'])
+
         if main.get_user(id_str) == "User not found.":
-                main.create_user(id_str, login_session['user']['login'], login_session['user']['avatar_url'])
+            main.create_user(
+                id_str, 
+                resp['login'], 
+                resp['avatar_url']
+            )
+
+            login_session['user'] = main.get_user(id_str)
+        else:
+            login_session['user'] = main.get_user(id_str)
     except AttributeError:
         app.logger.debug('error getting username from github, whoops')
         return "I don't know who you are; I should, but regretfully I don't", 500
+
+def updateUser():
+    login_session['user'] = main.get_user(login_session['user']['id'])
 
 @app.route("/")
 def index():
     if 'access_token' in login_session:
         if 'user' not in login_session:
+            startUser()
+        else:
             updateUser()
             
     return render_template("index.html", state=updateState(), login_session=login_session)
@@ -122,7 +132,7 @@ def createBuild():
 
     if request.method == "POST":
         currentSpells = []
-
+        print(request.form.get('spell-list'))
         for spls in list(map(int,request.form.get('spell-list').split(","))):
             currentSpells.append(SPELLS[spls-1]['ID'])
 

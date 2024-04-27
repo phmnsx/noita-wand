@@ -175,11 +175,13 @@ def like(user_id, post_id):
     for build in builds:
         if builds[loopb]["id"] == post_id:
             break
-        loopb +=1
+        loopb += 1
+
     for person in users:
         if users[loop]["id"] == user_id:
             break
         loop += 1
+    print(loopb)
     if post_id in users[loop]["liked-posts"]:
         users[loop]["liked-posts"].remove(post_id)
         builds[loopb]["likes"] -= 1

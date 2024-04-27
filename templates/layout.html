@@ -16,10 +16,10 @@
             </span>
             {% if 'access_token' in login_session %}
                 <div class="n-box n-container">
-                    <img class="rounded-circle" src="{{login_session['user']['avatar_url']}}" height="48px">
+                    <img class="rounded-circle" src="{{login_session['user']['img']}}" height="48px">
                     
                     <div class="n-column">
-                        <span class="mx-3 np-font">{{login_session['user']['login']}}</span>
+                        <span class="mx-3 np-font">{{login_session['user']['name']}}</span>
 
                         <a href="/logout" class="n-tooltip">
                             <img class="pi-image" src="/static/img/spells/42px-Spell_decelerating_shot.png" width="16px">

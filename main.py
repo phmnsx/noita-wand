@@ -248,5 +248,5 @@ def get_comments_id(id):
     for comment in comments:
         if comment["id"] == id:
             return comment
-    else :
+    else:
         return "Comment not found"

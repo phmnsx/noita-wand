@@ -240,3 +240,13 @@ def get_comments(id):
         if comment["build-id"] == id:
             result.append(comment)
     return result
+
+def get_comments_id(id):
+    f = open('dbc.json', encoding="utf8")
+    comments = json.load(f)
+    f.close
+    for comment in comments:
+        if comment["id"] == id:
+            return comment
+    else :
+        return "Comment not found"

@@ -167,19 +167,33 @@ def like(user_id, post_id):
     f = open('dbusers.json', encoding="utf8")
     users = json.load(f)
     f.close()
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close()
     loop = 0
+    loopb = 0
+    for build in builds:
+        if builds[0]["id"] == post_id:
+            break
+        loopb +=1
     for person in users:
         if users[loop]["id"] == user_id:
             break
         loop += 1
-
     if post_id in users[loop]["liked-posts"]:
         users[loop]["liked-posts"].remove(post_id)
+        builds[loopb]["likes"] -= 1
     else:
         users[loop]["liked-posts"].append(post_id)
+        builds[loopb]["likes"] += 1
+    
     f = open('dbusers.json', 'w', encoding="utf8")
     json.dump(users, f, indent=2, sort_keys=True)
     f.close()
+    f = open('db.json', 'w', encoding="utf8")
+    f = open('db.json', 'w', encoding="utf8")
+    json.dump(builds, f, indent=2, sort_keys=True)
+    f.close
 
 def get_user(user_id):
     f = open('dbusers.json', encoding="utf8")

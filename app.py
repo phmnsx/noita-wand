@@ -49,33 +49,9 @@ def updateUser():
 def index():
     if 'access_token' in login_session:
         if 'user' not in login_session:
-<<<<<<< Updated upstream
             updateUser()
             
     return render_template("index.html", state=updateState(), login_session=login_session)
-=======
-            access_token_url = request_url + '/user'
-            headers = {
-                'Authorization': "Bearer " + login_session['access_token']
-                }
-        
-            r = requests.get(access_token_url, headers=headers)
-
-            try:
-                resp = r.json()
-                login_session['user'] = resp
-                id_str = str(login_session['user']['id'])
-                if main.get_user(id_str) == "User not found.":
-                    main.create_user(id_str, login_session['user']['login'])
-            except AttributeError:
-                app.logger.debug('error getting username from github, whoops')
-                return "I don't know who you are; I should, but regretfully I don't", 500
-            
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                    for x in range(32))
-    login_session['state'] = state
-    return render_template("index.html", state=state, login_session=login_session)
->>>>>>> Stashed changes
 
 @app.route("/handleLogin", methods=["GET"])
 def handleLogin():
@@ -121,7 +97,6 @@ def logout():
     return redirect('/')
 
 @app.route("/builds/search")
-<<<<<<< Updated upstream
 def searchBuild_main():
     builds = fmtb.searchPage(0)
 
@@ -137,11 +112,6 @@ def searchBuild(page):
     
     login_session['page-search'] = page
     return render_template("search.html", page=page, state=updateState(), builds=builds, login_session=login_session)
-=======
-def searchBuild():
-    return create.get_builds()
-    #return render_template("index.html")
->>>>>>> Stashed changes
 
 @app.route("/builds/create", methods=["GET", "POST"])
 @login_required

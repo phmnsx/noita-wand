@@ -85,11 +85,7 @@ def create_comment(parent_id, type, content, parent_layer, author_id, date, buil
     id = id + 1
     r.write(str(id))
     r.close()
-<<<<<<< Updated upstream
     if type == "build":
-=======
-    if type == "post"   :
->>>>>>> Stashed changes
         new_comment["layer"] = 0
     elif type == "comment":
         new_comment["layer"] = parent_layer + 1

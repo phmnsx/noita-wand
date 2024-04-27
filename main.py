@@ -93,9 +93,9 @@ def create_comment(parent_id, type, content, parent_layer, author_id, date, buil
     new_comment["parent-id"] = parent_id
     new_comment["id"] = id
     new_comment["build-id"] = build_id
-    new_comment["author-id"] = author
+    new_comment["author-id"] = author_id
     new_comment["date"] = date
-    new_comment["is-deleted"] = 0
+    new_comment["is-deleted"] = False
     f = open('dbc.json', encoding="utf8")
     ccomments = json.load(f)
     f.close()
@@ -128,14 +128,16 @@ def delete_comment(comment_id):
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
     f.close
+
     loop = 0
     for comment in comments:
         if comments[loop]["id"] == comment_id:
-            comments[loop]["is-deleted"] == 1
+            comments[loop]["is-deleted"] = True
             break
         loop += 1
     else:
         return "Error 8: Comment not found."
+    
     f = open('dbc.json', 'w', encoding="utf8") 
     json.dump(comments, f, indent=2, sort_keys=True)
     f.close()
@@ -169,7 +171,8 @@ def like(user_id, post_id):
     for person in users:
         if users[loop]["id"] == user_id:
             break
-    loop += 1
+        loop += 1
+
     if post_id in users[loop]["liked-posts"]:
         users[loop]["liked-posts"].remove(post_id)
     else:

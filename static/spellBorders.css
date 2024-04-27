@@ -4,7 +4,7 @@
     outline: rgba(79, 50, 45, 0.7) dashed 2px;
 }
 
-#spell-slots{
+.spell-slots-frame{
     margin-top: 4%;
     margin-bottom: 4%;
     display: grid;

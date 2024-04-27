@@ -52,16 +52,18 @@ nav{
     filter: drop-shadow(2px 2px #102055); 
 }
 
-.n-container{
-    display: flex;
-    flex-direction: row;
+.n-center{
+    text-align: center;
+    align-items: center;
     justify-content: center;
+}
+
+.n-container{
+    display: flex; flex-direction: row;
 }
 
 .n-column{
     display:flex; flex-direction:column;
-    text-align: center;
-    align-items: center;
 }
 
 .n-box{
@@ -76,12 +78,8 @@ nav{
     font-size: 64px;
 }
 
-.n-btn{
-
-}
-
 .n-btn-title{
-    font-size: 48px;
+    font-size: 36px;
 }
 
 .n-btn:hover{
@@ -96,6 +94,24 @@ nav{
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+
+.wand-frame{
+    width: 144px; height: 108px;
+    background-image: url(/static/wand_frame.png);
+    background-size: cover;
+}
+
+.warning-screen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
 }
 
 /*TOOLTIP CSS*/
@@ -127,3 +143,24 @@ a.n-tooltip:hover .n-tooltip-content-text{
     display: block;
     position: fixed;
 }
+
+/*SCROLLBAR*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

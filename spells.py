@@ -5,7 +5,7 @@ def get_spell(id):
     spells = json.load(f)
     f.close
     for spell in spells:
-        if spells["ID"] == id:
+        if spell["ID"] == id:
             return spell
     else:
         return "Error 11: Spell not found."

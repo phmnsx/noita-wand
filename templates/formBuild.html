@@ -27,7 +27,6 @@
     .spell-item{
         width: 32px; height: 32px;
     }
-
 </style>
 <script>
     var tooltips = [].slice.call(document.querySelectorAll('.n-tooltip'))
@@ -36,8 +35,14 @@
 
     window.onload = (e) => {
         defineSpellsSlots()
-        document.getElementById('build-date').valueAsDate = new Date();
+        updateDate()
+        document.getElementById("build-icon").value = "0000";
     }
+    const submit = () => {
+        updateDate()
+        document.querySelector("#form").submit()
+    }
+
     const defineSpellsSlots = () => {
         let amount = document.getElementById('spell-slots-value').value
         document.getElementById('spell-slots').innerHTML = ""
@@ -81,11 +86,15 @@
         document.getElementById("wandImage").style.backgroundImage = `url(/static/img/wands/wand_${n}.png)`;
         document.getElementById("build-icon").value = n;
     }
+    const updateDate = () => {
+        var date1 = new Date()
+        document.getElementById('build-date').value = date1
+    }
 </script>
-<form method="POST">
-    <div class="n-container">
-        <div class="n-box" text-align:center; width:80%">
-            <div class="n-column">
+<form id="form" method="POST" action="/builds/create">
+    <div class="n-container n-center align-items-start">
+        <div class="n-box">
+            <div class="n-column n-center">
                 <label for="build-title" class="np-font" required>Title</label>
                 <input id="build-title" name="build-title" type="text" class="np-font n-box">
                 <br>
@@ -105,8 +114,9 @@
             <br>
             <span id="amount-spell"class="np-font">Amount of Spell Slots:</span>
             <input id="spell-slots-value" name="spell-slots-value" type="number" value="1" hidden>
-            <input id="build-date" name="build-date" type="date" hidden>
-            <input type="submit" value="Send">
+            <input id="build-date" name="build-date" type="text" hidden>
+            <br> 
+            <input onclick="submit()" type="button" id="submit">
         </div>
     
         
@@ -114,10 +124,10 @@
             <span class="np-font" style="font-size: 32px;">Insert the wand's spells</span>
             <span class="np-font">Spells</span>
             <input id="spell-list" type="text" name="spell-list" value="" hidden>
-            <div id="spell-slots" class="n-container">           
+            <div id="spell-slots" class="spell-slots-frame n-container n-center">           
             </div>
             <span class="np-font">Spell list</span>
-            <div class="spell-menu">
+            <div class="spell-menu n-center">
                 {% for spell in spells %} 
                 <a class="n-tooltip spell-item {{spell['css_type']}}" onclick="addSpell({{loop.index}})">
                     {{spell['img_html'] | safe}}

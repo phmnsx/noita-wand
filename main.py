@@ -173,7 +173,7 @@ def like(user_id, post_id):
     loop = 0
     loopb = 0
     for build in builds:
-        if builds[0]["id"] == post_id:
+        if builds[loopb]["id"] == post_id:
             break
         loopb +=1
     for person in users:

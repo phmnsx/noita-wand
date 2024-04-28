@@ -113,37 +113,6 @@ nav{
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
 }
-
-/*TOOLTIP CSS*/
-.n-tooltip {
-    text-decoration: none;
-    position: relative;
-}
-
-a.n-tooltip .n-tooltip-content {
-    display: none;
-    z-index: 1000;
-}
-
-a.n-tooltip .n-tooltip-content-text {
-    display: none;
-    z-index: 1000;
-}
-
-a.n-tooltip:hover{
-    cursor: pointer;
-}
-a.n-tooltip:hover .n-tooltip-content {
-    display: flex;
-    position: absolute;
-    bottom: 100%;
-}
-
-a.n-tooltip:hover .n-tooltip-content-text{
-    display: block;
-    position: fixed;
-}
-
 /*SCROLLBAR*/
 /* width */
 ::-webkit-scrollbar {

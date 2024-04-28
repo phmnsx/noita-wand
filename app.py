@@ -99,7 +99,12 @@ def getRecentBuilds(page):
         return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
     else:
         return {"error": "Invalid State value"}
-        
+
+@app.route("/builds/getBlindBuilds/", methods=["GET", "POST"])
+def getBlindBuilds():
+    if request.method == "GET":
+        return redirect("/")
+
 @app.route("/builds/create", methods=["GET", "POST"])
 @login_required
 def createBuild():

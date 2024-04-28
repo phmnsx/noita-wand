@@ -26,12 +26,19 @@
     .spell-item{
         width: 32px; height: 32px;
     }
+    
+    .popover{
+        padding: 0px;
+        text-align: center;
+        background-color: black;
+        white-space: pre-line;
+    }
 </style>
 
 <script>
     window.onload = (e) => {
         updateSearchResult();
-    }  
+    }
 
     const addComment = function(ev) {
         ev.preventDefault()
@@ -98,6 +105,15 @@
                 formsCollection[i].addEventListener("submit", addComment,{ once: false })
             }
             document.getElementById('loading-build').style.display = 'none'
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
         })
        
     }
@@ -122,7 +138,7 @@
             updateSearchResult()
         })
     }
-
+    {% if "user" in login_session %}
     const showReply = (id_comment, id_build) => {
         if (document.getElementById(`reply-section-${id_comment}`).innerHTML == ""){
             document.getElementById(`reply-section-${id_comment}`).innerHTML =
@@ -160,6 +176,7 @@
             document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
         }
     }
+    {%endif%}
 
     const showConfirmDeleteComment = (id_comment, id_build) => {
         comment = document.getElementById("comments-"+id_comment).cloneNode(true)

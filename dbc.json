@@ -5,7 +5,7 @@
     "content": "HOW",
     "date": "Fri Apr 26 2024 20:39:33",
     "id": 52,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -15,7 +15,7 @@
     "content": "NEM FUDEWNDO",
     "date": "Fri Apr 26 2024 20:39:40",
     "id": 53,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -35,7 +35,7 @@
     "content": "N\u00e9 n\u00e3o?",
     "date": "Fri Apr 26 2024 20:53:45",
     "id": 55,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -45,7 +45,7 @@
     "content": "Que build merda!",
     "date": "Fri Apr 26 2024 20:56:23",
     "id": 56,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -55,17 +55,7 @@
     "content": "Que legal!",
     "date": "Fri Apr 26 2024 21:05:59",
     "id": 57,
-    "is-deleted": true,
-    "layer": 0,
-    "parent-id": 0
-  },
-  {
-    "author-id": "71940808",
-    "build-id": 46,
-    "content": "Mentira!",
-    "date": "Fri Apr 26 2024 21:06:26",
-    "id": 58,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -75,7 +65,7 @@
     "content": "Mentira!",
     "date": "Fri Apr 26 2024 21:06:26",
     "id": 59,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -85,7 +75,7 @@
     "content": "asd",
     "date": "Fri Apr 26 2024 21:13:29",
     "id": 60,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -95,7 +85,7 @@
     "content": "asd",
     "date": "Fri Apr 26 2024 22:23:14",
     "id": 61,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -105,7 +95,7 @@
     "content": "Caralho tudo deletado!",
     "date": "Fri Apr 26 2024 22:39:03",
     "id": 62,
-    "is-deleted": true,
+    "is-deleted": false,
     "layer": 0,
     "parent-id": 0
   },
@@ -135,6 +125,506 @@
     "content": "se mata",
     "date": "Fri Apr 26 2024 23:56:30",
     "id": 66,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "DEU CERTO???w",
+    "date": "Sat Apr 27 2024 16:33:10",
+    "id": 67,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "DEU CEURTO@@@222222",
+    "date": "Sat Apr 27 2024 16:36:04",
+    "id": 68,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "legal n\u00e9?",
+    "date": "Sat Apr 27 2024 16:36:35",
+    "id": 69,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "dddd",
+    "date": "Sat Apr 27 2024 16:37:37",
+    "id": 70,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "WTFFFFF",
+    "date": "Sat Apr 27 2024 16:37:57",
+    "id": 71,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "zzzz",
+    "date": "Sat Apr 27 2024 16:39:16",
+    "id": 72,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "zzzzz",
+    "date": "Sat Apr 27 2024 16:39:23",
+    "id": 73,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "dddd",
+    "date": "Sat Apr 27 2024 16:41:54",
+    "id": 74,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "asdasdasd",
+    "date": "Sat Apr 27 2024 16:43:28",
+    "id": 75,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "qewewqwqewqe",
+    "date": "Sat Apr 27 2024 16:43:40",
+    "id": 76,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "weqqewweqeqwwqe",
+    "date": "Sat Apr 27 2024 16:44:01",
+    "id": 77,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "asdasd",
+    "date": "Sat Apr 27 2024 16:54:47",
+    "id": 78,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "a",
+    "date": "Sat Apr 27 2024 17:00:46",
+    "id": 79,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "asdasd",
+    "date": "Sat Apr 27 2024 17:03:19",
+    "id": 80,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "qwe",
+    "date": "Sat Apr 27 2024 17:06:30",
+    "id": 81,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "eq",
+    "date": "Sat Apr 27 2024 17:09:43",
+    "id": 82,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 47,
+    "content": "D\u00e1 certo?",
+    "date": "Sat Apr 27 2024 17:19:32",
+    "id": 83,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "asd",
+    "date": "Sat Apr 27 2024 17:19:58",
+    "id": 84,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 47,
+    "content": "Legal1",
+    "date": "Sat Apr 27 2024 18:23:27",
+    "id": 85,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 47,
+    "content": "Legal2",
+    "date": "Sat Apr 27 2024 18:23:31",
+    "id": 86,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "foi?",
+    "date": "Sat Apr 27 2024 18:27:19",
+    "id": 87,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "foi?",
+    "date": "Sat Apr 27 2024 18:27:21",
+    "id": 88,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "Foi?",
+    "date": "Sat Apr 27 2024 18:27:31",
+    "id": 89,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 62,
+    "content": "FOI!",
+    "date": "Sat Apr 27 2024 18:27:37",
+    "id": 90,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Aqui funciona?",
+    "date": "Sat Apr 27 2024 18:34:40",
+    "id": 92,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 90,
+    "content": "dsa",
+    "date": "Sat Apr 27 2024 18:40:17",
+    "id": 93,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 90,
+    "content": "qwe",
+    "date": "Sat Apr 27 2024 18:40:20",
+    "id": 94,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 90,
+    "content": "Lol",
+    "date": "Sat Apr 27 2024 18:40:24",
+    "id": 95,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Daora mano",
+    "date": "Sat Apr 27 2024 19:46:29",
+    "id": 96,
+    "is-deleted": false,
+    "layer": 1,
+    "parent-id": 52
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Verdade!",
+    "date": "Sat Apr 27 2024 19:49:01",
+    "id": 997,
+    "is-deleted": false,
+    "layer": 1,
+    "parent-id": 59
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Incerteza!",
+    "date": "Sat Apr 27 2024 19:49:01",
+    "id": 955,
+    "is-deleted": true,
+    "layer": 2,
+    "parent-id": 997
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 90,
+    "content": "CARALHOOOOOOOOOOOO",
+    "date": "Sat Apr 27 2024 20:01:20",
+    "id": 98,
+    "is-deleted": false,
+    "layer": 1,
+    "parent-id": 95
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "SOCORROAAAAAAAAAAAAA!",
+    "date": "Sat Apr 27 2024 20:59:15",
+    "id": 99,
+    "is-deleted": false,
+    "layer": 1,
+    "parent-id": 59
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "\u00c9 s\u00e9rio?",
+    "date": "Sun Apr 28 2024 02:16:14",
+    "id": 100,
+    "is-deleted": false,
+    "layer": 3,
+    "parent-id": 955
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae libero et nulla congue dignissim. Aenean in condimentum augue. Proin eget est viverra, interdum erat sed, cursus arcu. Fusce id odio non odio interdum facilisis et a metus. Nam convallis ornare massa tristique hendrerit. Mauris quis dolor quis mi ultrices cursus at at nibh. Aenean lacinia, lectus at posuere malesuada, diam",
+    "date": "Sun Apr 28 2024 02:45:16",
+    "id": 101,
+    "is-deleted": true,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae libero et nulla congue dignissim. \n\nAenean in condimentum augue. Proin eget est viverra, interdum erat sed, cursus arcu. \n\nFusce id odio non odio interdum facilisis et a metus. Nam convallis ornare massa tristique hendrerit. Mauris quis dolor quis mi ultrices cursus at at nibh. Aenean lacinia, lectus at posuere malesuada, ",
+    "date": "Sun Apr 28 2024 02:49:17",
+    "id": 102,
+    "is-deleted": false,
+    "layer": 0,
+    "parent-id": 0
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "ne\u00b4m fodadendpo",
+    "date": "Sun Apr 28 2024 03:29:49",
+    "id": 106,
+    "is-deleted": false,
+    "layer": 4,
+    "parent-id": 100
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Muito daora mano",
+    "date": "Sun Apr 28 2024 03:32:21",
+    "id": 107,
+    "is-deleted": false,
+    "layer": 1,
+    "parent-id": 52
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Que legal",
+    "date": "Sun Apr 28 2024 03:33:14",
+    "id": 108,
+    "is-deleted": false,
+    "layer": 5,
+    "parent-id": 106
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Qual o limite disso?",
+    "date": "Sun Apr 28 2024 03:33:24",
+    "id": 109,
+    "is-deleted": false,
+    "layer": 6,
+    "parent-id": 108
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "N\u00e3o sei",
+    "date": "Sun Apr 28 2024 03:33:29",
+    "id": 110,
+    "is-deleted": false,
+    "layer": 7,
+    "parent-id": 109
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Ser\u00e1 que a gente vai precisar colocar um limite ",
+    "date": "Sun Apr 28 2024 03:33:44",
+    "id": 111,
+    "is-deleted": false,
+    "layer": 8,
+    "parent-id": 110
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Acho que sim, tamo no final de espa\u00e7o",
+    "date": "Sun Apr 28 2024 03:33:55",
+    "id": 112,
+    "is-deleted": false,
+    "layer": 9,
+    "parent-id": 111
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Acho que d\u00e1 pra encaixar mais um",
+    "date": "Sun Apr 28 2024 03:34:04",
+    "id": 113,
+    "is-deleted": false,
+    "layer": 10,
+    "parent-id": 112
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Nem fodendo, d\u00e1 pra encaixar mais um, eu n\u00e3o to acreditando n\u00e3o",
+    "date": "Sun Apr 28 2024 03:34:43",
+    "id": 114,
+    "is-deleted": false,
+    "layer": 11,
+    "parent-id": 113
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Eu n\u00e3o tenho nada a haver com nada",
+    "date": "Sun Apr 28 2024 03:35:13",
+    "id": 115,
+    "is-deleted": false,
+    "layer": 5,
+    "parent-id": 106
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "n\u00e9?",
+    "date": "Sun Apr 28 2024 03:35:49",
+    "id": 116,
+    "is-deleted": false,
+    "layer": 5,
+    "parent-id": 106
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "A gente precisa de uma maneira de esconder comentarios, j\u00e1 t\u00e1 muito cheio n\u00e3o d\u00e1 pra saber a posi\u00e7\u00e3o da resposta em rela\u00e7\u00e3o a outra. slk",
+    "date": "Sun Apr 28 2024 03:37:04",
+    "id": 117,
+    "is-deleted": false,
+    "layer": 2,
+    "parent-id": 997
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 46,
+    "content": "Concordo",
+    "date": "Sun Apr 28 2024 03:37:20",
+    "id": 118,
+    "is-deleted": false,
+    "layer": 2,
+    "parent-id": 96
+  },
+  {
+    "author-id": "71940808",
+    "build-id": 90,
+    "content": "to muito orgulhoso tu \u00e9 doido",
+    "date": "Sun Apr 28 2024 03:37:40",
+    "id": 119,
     "is-deleted": false,
     "layer": 0,
     "parent-id": 0

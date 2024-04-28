@@ -3,9 +3,9 @@ from flask import session as login_session
 import requests
 import json, random, string
 
-import create
+import create as build
 import main
-from static.imports.credentials import client_id, client_secret
+from static.imports.credentials import client_id, client_secret, app_secret_key
 from helpers import login_required
 import spells
 import formatting
@@ -14,7 +14,7 @@ fmts = formatting.formatSpell()
 fmtb = formatting.formatBuild()
 
 app = Flask(__name__)
-app.secret_key = "JKGDhsMBGOLZinsjz0GCvNpbZ5riGBzG"
+app.secret_key = app_secret_key
 
 authorization_base_url = 'https://github.com/login/oauth/authorize'
 token_url = 'https://github.com/login/oauth/access_token'
@@ -23,35 +23,6 @@ request_url = 'https://api.github.com'
 COMMENT_POST = "build"
 COMMENT_REPLY = "comment"
 
-def startUser():
-    resp = {}
-    access_token_url = request_url + '/user'
-    headers = {
-        'Authorization': "Bearer " + login_session['access_token']
-        }
-        
-    r = requests.get(access_token_url, headers=headers)
-
-    try:
-        resp = r.json()
-        id_str = str(resp['id'])
-
-        if main.get_user(id_str) == "User not found.":
-            main.create_user(
-                id_str, 
-                resp['login'], 
-                resp['avatar_url']
-            )
-
-            login_session['user'] = main.get_user(id_str)
-        else:
-            login_session['user'] = main.get_user(id_str)
-    except AttributeError:
-        app.logger.debug('error getting username from github, whoops')
-        return "I don't know who you are; I should, but regretfully I don't", 500
-
-def updateUser():
-    login_session['user'] = main.get_user(login_session['user']['id'])
 
 @app.route("/")
 def index():
@@ -111,18 +82,24 @@ def searchBuild_main():
     builds = fmtb.searchPage(0)
 
     login_session['page-search'] = 0
-    return render_template("search.html", page=0, state=updateState(), builds=builds,login_session=login_session)
+    return render_template("search.html", page=0, state=updateState(), login_session=login_session)
 
 @app.route("/builds/search/<int:page>")
 def searchBuild(page):
-    builds = fmtb.searchPage(page)
-
-    if builds == "Invalid Page":
-        return redirect("/builds/search")
-    
     login_session['page-search'] = page
-    return render_template("search.html", page=page, state=updateState(), builds=builds, login_session=login_session)
+    return render_template("search.html", page=page, state=updateState(), login_session=login_session)
 
+@app.route("/builds/getRecentBuilds/<int:page>")
+def getRecentBuilds(page):
+    if request.args.get('state') == login_session['state']:
+        builds = fmtb.searchPage(page)
+
+        if builds == "Invalid Page":
+            return redirect("/builds/search")
+        return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+    else:
+        return {"error": "Invalid State value"}
+        
 @app.route("/builds/create", methods=["GET", "POST"])
 @login_required
 def createBuild():
@@ -137,7 +114,7 @@ def createBuild():
             currentSpells.append(SPELLS[spls-1]['ID'])
 
         date = request.form.get('build-date')[:24]
-        create.create(request.form.get('build-title'), 
+        build.create(request.form.get('build-title'), 
                   request.form.get('build-icon'),  
                   currentSpells,
                   date, 
@@ -147,34 +124,64 @@ def createBuild():
     for spl in SPELLS:
         spl['css_type'] = fmts.toCssType(spl)
         spl['img_html'] = fmts.toHTML(spl)
-    updateUser()
-    return render_template("formBuild.html", spells=SPELLS, login_session=login_session)
 
-@app.route("/addComment/<int:id>", methods=["POST"])
+    spell_type = ["Projectile","Static projectile", "Passive", "Utility", "Projectile modifier","Material", "Other", "Multicast"]
+    
+    final_spells = []
+    for type in spell_type:
+        for spl in SPELLS:
+            if spl['Type'] == type:
+                final_spells.append(spl)
+    updateUser()
+    return render_template("formBuild.html", spells=final_spells, login_session=login_session)
+
+@app.route("/addComment/<int:id>", methods=["GET","POST"])
 @login_required
 def sendComment(id):
     if request.method == "POST":
         if request.args.get('state') == login_session['state']:
-            date = request.form.get('date')[:24]
+            date = request.json['date'][:24]
             main.create_comment(
                 0,
                 COMMENT_POST,
-                request.form.get('comment'),
+                request.json['comment'],
                 0,
                 str(login_session['user']['id']),
                 date,
                 id
             )
             updateUser()
-            if login_session['page-search'] > 0:
-                return redirect("/builds/search/"+str(login_session['page-search'])+"#build-"+str(id))
-            else:
-                return redirect("/builds/search"+"#build-"+str(id))
+            return "OK"
         else:
             return redirect('/logout')
     else:
         return redirect('/')
-        
+
+@app.route("/addReply/<int:build_id>/<int:parent_id>", methods=["GET","POST"])
+@login_required
+def sendReply(build_id, parent_id):
+    if request.method == "POST":
+        if request.args.get('state') == login_session['state']:
+            parent_layer = main.get_comments_id(parent_id)['layer']
+            date = request.json['date'][:24]
+            
+            main.create_comment(
+                parent_id,
+                COMMENT_REPLY,
+                request.json['comment'],
+                parent_layer,
+                str(login_session['user']['id']),
+                date,
+                build_id
+            )
+            
+            updateUser()
+            return "OK"
+        else:
+            return redirect('/logout')
+    else:
+        return redirect('/')
+
 @app.route("/removeComment/<int:id_comment>", methods=["GET"])
 @login_required
 def removeComment(id_comment):
@@ -184,10 +191,7 @@ def removeComment(id_comment):
             
             id = request.args.get('buildID')
             updateUser()
-            if login_session['page-search'] > 0:
-                return redirect("/builds/search/"+str(login_session['page-search'])+"#build-"+str(id))
-            else:
-                return redirect("/builds/search"+"#build-"+str(id))
+            return 'OK'
         else:
             return redirect('/logout')
     else:
@@ -201,14 +205,44 @@ def likeBuild(id):
             main.like(login_session['user']['id'], id)
             updateUser()
             if login_session['page-search'] > 0:
-                return redirect("/builds/search/"+str(login_session['page-search'])+"#build-"+str(id))
+                return 'redirect("/builds/search/"+str(login_session[`page-search`])+"#build-"+str(id))'
             else:
-                return redirect("/builds/search"+"#build-"+str(id))
+                return 'redirect("/builds/search"+"#build-"+str(id))'
         else:
             return redirect('/logout')
     else:
         updateUser()
         return redirect('/')
+
+def startUser():
+    resp = {}
+    access_token_url = request_url + '/user'
+    headers = {
+        'Authorization': "Bearer " + login_session['access_token']
+        }
+        
+    r = requests.get(access_token_url, headers=headers)
+
+    try:
+        resp = r.json()
+        id_str = str(resp['id'])
+
+        if main.get_user(id_str) == "User not found.":
+            main.create_user(
+                id_str, 
+                resp['login'], 
+                resp['avatar_url']
+            )
+
+            login_session['user'] = main.get_user(id_str)
+        else:
+            login_session['user'] = main.get_user(id_str)
+    except AttributeError:
+        app.logger.debug('error getting username from github, whoops')
+        return "I don't know who you are; I should, but regretfully I don't", 500
+
+def updateUser():
+    login_session['user'] = main.get_user(login_session['user']['id'])
 
 def updateState():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)

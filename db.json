@@ -20,7 +20,7 @@
     "description": "adasdasdasdasd",
     "id": 47,
     "image": "0453",
-    "likes": 1,
+    "likes": 0,
     "size": 5,
     "spells": [
       "ICEBALL",
@@ -43,5 +43,20 @@
       "ACIDSHOT"
     ],
     "title": "dsa"
+  },
+  {
+    "author-id": "71940808",
+    "date": "Sat Apr 27 2024 18:28:32",
+    "description": "A minha primeira build, espero que gostem!",
+    "id": 90,
+    "image": "0307",
+    "likes": 0,
+    "size": 3,
+    "spells": [
+      "CRUMBLING_EARTH",
+      "DYNAMITE",
+      "DYNAMITE"
+    ],
+    "title": "Minha primeira Build"
   }
 ]

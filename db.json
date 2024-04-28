@@ -71,5 +71,25 @@
       "POWERDIGGER"
     ],
     "title": "??"
+  },
+  {
+    "author-id": "161394779",
+    "date": "Sun Apr 28 2024 15:19:22",
+    "description": "simple wand 5 killig peope,,, tank me lat8r",
+    "id": 73,
+    "image": "0100",
+    "likes": 0,
+    "size": 8,
+    "spells": [
+      "LIFETIME",
+      "LIFETIME",
+      "LIFETIME",
+      "LIFETIME",
+      "LIFETIME",
+      "HOMING",
+      "DAMAGE",
+      "CLIPPING_SHOT"
+    ],
+    "title": "wisp"
   }
 ]

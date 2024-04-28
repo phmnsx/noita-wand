@@ -2101,10 +2101,11 @@
     "ID": "PURPLE_EXPLOSION_FIELD",
     "Spawn chance by Tier": "01/63.621.5711/8411.1921/19610.5130041/28510.3551/25010.4061/27310.377008009001000"
   },
+  
   {
     "title": "Matosade",
     "img": "/42px-Spell_worm_rain.png",
-    "description": "\"Alea iacta est\"",
+    "description": "Alea iacta est",
     "Type": "Static projectile",
     "Uses": 2,
     "Mana Drain": 225,
@@ -2119,7 +2120,7 @@
   {
     "title": "Meteorisade",
     "img": "/42px-Spell_meteor_rain.png",
-    "description": "\"Alea iacta est\"",
+    "description": "Alea iacta est",
     "Type": "Static projectile",
     "Uses": 2,
     "Mana Drain": 225,

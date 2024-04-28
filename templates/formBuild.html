@@ -44,14 +44,15 @@
         defineSpellsSlots()
         updateDate()
         document.getElementById("build-icon").value = "0000";
+        
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl)
-            })
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
     }
 
     const submit = () => {
@@ -111,15 +112,14 @@
     <div class="n-container n-center align-items-start">
         <div class="n-box">
             <div class="n-column n-center">
-                <label for="build-title" class="np-font" required>Title</label>
-                <input id="build-title" name="build-title" type="text" class="np-font n-box">
+                <label for="build-title" class="np-font">Title</label>
+                <input id="build-title" name="build-title" type="text" class="np-font n-box" required>
                 <br>
                 <span class="np-font">Icon</span>
                 <div class="n-box">
                     <div id="wandImage" class="pi-image wand-icon" style="background-image: url(/static/img/wands/wand_0000.png);"></div>
                     <a 
                         onclick="randomWand()" 
-                        class="n-tooltip"
                         data-bs-toggle="tooltip"
                         data-bs-placement="bottom"
                         data-bs-html="true"
@@ -151,13 +151,14 @@
             <span class="np-font">Spell list</span>
             <div class="spell-menu n-center">
                 {% for spell in spells %} 
-                <a 
-                    class="spell-item {{spell['css_type']}}" 
-                    onclick="addSpell({{loop.index}})">
-                    {{spell['img_html'] | safe}}
-                </a>
+                    <a 
+                        class="spell-item {{spell['css_type']}}" 
+                        onclick="addSpell({{loop.index}})">
+                        {{spell['img_html'] | safe}}
+                    </a>
                 {% endfor %}
             </div>
+
         </div>
     </div>
 </form>

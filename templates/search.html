@@ -26,12 +26,15 @@
     .spell-item{
         width: 32px; height: 32px;
     }
-    
+
     .popover{
         padding: 0px;
         text-align: center;
         background-color: black;
         white-space: pre-line;
+    }
+    #search-box{
+        transition: .3px;
     }
 </style>
 
@@ -39,15 +42,101 @@
     window.onload = (e) => {
         updateSearchResult();
     }
+    
+    const updateSearchResult = () => {
+        fetch("getRecentBuilds/{{page}}?state={{state}}", {
+            method: "GET"
+        })
+        .then(response => {
+            return response.text();
+        })
+        .then(html =>  {
+            document.getElementById("recent-builds").innerHTML = html
+            var formsCollection = document.getElementsByTagName("form");
+            for(var i=0;i<formsCollection.length;i++)
+            {
+                formsCollection[i].addEventListener("submit", addComment,{ once: false })
+            }
+            document.getElementById('loading-build').style.display = 'none'
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        })
+       
+    }
+    {% if "user" in login_session %}
+    const sendReply = (id_parent, id_build) => {
+        var date1 = new Date()
+        document.getElementById('date-reply-'+id_parent).value = date1
+        var date = document.getElementById('date-reply-'+id_parent).value
+        var comment = document.getElementById(`text-reply-${id_parent}`).value
+
+        fetch(`/addReply/${id_build}/${id_parent}?state={{state}}`, {
+            method: "POST",
+            body: JSON.stringify({
+                comment: comment,
+                date: date
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        .then(() => {
+            document.getElementById(`reply-section-${id_parent}`).innerHTML == ""
+            updateSearchResult()
+        })
+    }
+    
+    const showReply = (id_comment, id_build) => {
+        if (document.getElementById(`reply-section-${id_comment}`).innerHTML == ""){
+            document.getElementById(`reply-section-${id_comment}`).innerHTML =
+            `
+            <form id="form-reply-${id_comment}" class="d-flex align-items-center m-4" action="javascript:void(0);">
+                <img class="rounded-circle mx-3" src="{{login_session['user']['img']}}" height="48px">
+                <div class="w-100 mx-2">
+                    <textarea
+                        id="text-reply-${id_comment}"
+                        name="reply"
+                        oninput="auto_grow(this)"
+                        class="np-font mx-2 w-100" 
+                        style="resize: none;box-shadow: 0 3px 0 #948064; background-color:rgba(60, 60, 60, 0.7); color:white;" 
+                        placeholder="Write your reply!"
+                        rows="1"
+                        maxlength="400"></textarea>
+                
+                    <span id="text-reply-${id_comment}-warning" class="np-font mx-2 " style="color:rgba(198,59,59,0.7)"></span>
+                </div>
+                <input id="date-reply-${id_comment}" type="text" name='date' hidden>
+                <input  
+                    onclick="sendReply(${id_comment}, ${id_build})"
+                    class="pi-image n-submit"
+                    type="button" 
+                    style="
+                        width:36px; height:36px;
+                        border:none; 
+                        background-color:transparent;
+                        background-image: url(/static/send.png);
+                        "
+                    value="">
+            </form>
+            `
+        } else {
+            document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
+        }
+    }
 
     const addComment = function(ev) {
         ev.preventDefault()
-        console.log(this.id)
         var date1 = new Date()
         document.getElementById('date-'+this.id).value = date1
         var date = document.getElementById('date-'+this.id).value
         var comment = document.getElementById(`comment-${this.id}`).value
-        console.log(document.getElementById(`comment-${this.id}`))
         
         fetch(`/addComment/${this.id}?state={{state}}`,{
             method: "POST",
@@ -88,95 +177,6 @@
             updateSearchResult()
         })
     }
-    
-    const updateSearchResult = () => {
-        fetch("getRecentBuilds/{{page}}?state={{state}}", {
-            method: "GET"
-        })
-        .then(response => {
-            return response.text();
-        })
-        .then(html =>  {
-            document.getElementById("recent-builds").innerHTML = html
-            var formsCollection = document.getElementsByTagName("form");
-            for(var i=0;i<formsCollection.length;i++)
-            {
-                console.log(formsCollection[i])
-                formsCollection[i].addEventListener("submit", addComment,{ once: false })
-            }
-            document.getElementById('loading-build').style.display = 'none'
-            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl)
-            })
-
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
-        })
-       
-    }
-    const sendReply = (id_parent, id_build) => {
-        var date1 = new Date()
-        document.getElementById('date-reply-'+id_parent).value = date1
-        var date = document.getElementById('date-reply-'+id_parent).value
-        var comment = document.getElementById(`text-reply-${id_parent}`).value
-
-        fetch(`/addReply/${id_build}/${id_parent}?state={{state}}`, {
-            method: "POST",
-            body: JSON.stringify({
-                comment: comment,
-                date: date
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        })
-        .then(() => {
-            document.getElementById(`reply-section-${id_parent}`).innerHTML == ""
-            updateSearchResult()
-        })
-    }
-    {% if "user" in login_session %}
-    const showReply = (id_comment, id_build) => {
-        if (document.getElementById(`reply-section-${id_comment}`).innerHTML == ""){
-            document.getElementById(`reply-section-${id_comment}`).innerHTML =
-            `
-            <form id="form-reply-${id_comment}" class="d-flex align-items-center m-4" action="javascript:void(0);">
-                <img class="rounded-circle mx-3" src="{{login_session['user']['img']}}" height="48px">
-                <div class="w-100 mx-2">
-                    <textarea
-                        id="text-reply-${id_comment}"
-                        name="reply"
-                        oninput="auto_grow(this)"
-                        class="np-font mx-2 w-100" 
-                        style="resize: none;box-shadow: 0 3px 0 #948064; background-color:rgba(60, 60, 60, 0.7); color:white;" 
-                        placeholder="Write your reply!"
-                        rows="1"
-                        maxlength="400"></textarea>
-                
-                    <span id="text-reply-${id_comment}-warning" class="np-font mx-2 " style="color:rgba(198,59,59,0.7)"></span>
-                </div>
-                <input id="date-reply-${id_comment}" type="text" name='date' hidden>
-                <input  
-                    onclick="sendReply(${id_comment}, ${id_build})"
-                    class="pi-image n-submit"
-                    type="button" 
-                    style="
-                        width:36px; height:36px;
-                        border:none; 
-                        background-color:transparent;
-                        background-image: url(/static/send.png);
-                        "
-                    value="">
-            </form>
-            `
-        } else {
-            document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
-        }
-    }
-    {%endif%}
 
     const showConfirmDeleteComment = (id_comment, id_build) => {
         comment = document.getElementById("comments-"+id_comment).cloneNode(true)
@@ -221,10 +221,24 @@
             document.getElementById(element.id+"-warning").innerHTML = ""
         }
       }
+    {%endif%}
 
+    function showSearchBox() {
+        //document.getElementById("search-box").innerHTML =
+        //document.getElementById("search-box").classList.add("n-box")
+    }
 </script>
 
 <div class="n-column">
+    <div id="search-box" class="d-flex justify-content-center np-font n-box">
+        <input name="search-query" id="search-query" class="n-box w-100" placeholder="Search..." type="text" onclick="getSearchResults(this)">
+        <a
+            onclick="getSearchResult()"
+            style="cursor:pointer;">
+            <img class="pi-image" src="/static/search.png" height="64" width="64">
+        </a>
+    </div>
+
     <span class="nt-font n-title text-center">Recent Builds</span>
     <span id="loading-build" class="np-font n-title text-center" style="color: white;">Loading builds...</span>
 

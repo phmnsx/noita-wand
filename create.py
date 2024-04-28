@@ -11,6 +11,8 @@ build={
 }
 def create(title, image, spells, date, description, authorid):
 
+    if spells == '':
+        return "Error 25: No spells selected"
     r = open('db.json', encoding="utf8")
     items = json.load(r)
     r.close()
@@ -53,6 +55,7 @@ def get_builds():
     f = open('db.json', encoding="utf8")
     builds = json.load(f)
     f.close
+    builds.reverse()
     return builds
 
 def edit_build(title, image, description, id):
@@ -86,3 +89,9 @@ def delete_build(id):
     f = open('db.json', 'w', encoding="utf8")
     json.dump(builds, f, indent=2, sort_keys=True)
     f.close()
+
+def reverse_builds():
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close
+    builds.reverse

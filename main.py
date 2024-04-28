@@ -235,6 +235,7 @@ def get_comments(id):
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
     f.close
+    comments.reverse()
     result = []
     for comment in comments:
         if comment["build-id"] == id:
@@ -245,6 +246,7 @@ def get_comments_id(id):
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
     f.close
+    comments.reverse()
     for comment in comments:
         if comment["id"] == id:
             return comment

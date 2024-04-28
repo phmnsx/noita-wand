@@ -3,7 +3,7 @@
 {%block main%}
 
 <head>
-    <link href="/static/spellBorders.css"  rel="stylesheet" >
+    <link href="/static/spellBorders.css" rel="stylesheet" >
 </head>
 <style>
     .wand-icon{
@@ -27,9 +27,16 @@
     .spell-item{
         width: 32px; height: 32px;
     }
+
+    .popover{
+        padding: 0px;
+        text-align: center;
+        background-color: black;
+        white-space: pre-line;
+    }
+    
 </style>
 <script>
-    var tooltips = [].slice.call(document.querySelectorAll('.n-tooltip'))
     var addedSpells = []
     const SPELLS = {{spells | tojson}};
 
@@ -37,6 +44,14 @@
         defineSpellsSlots()
         updateDate()
         document.getElementById("build-icon").value = "0000";
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
     }
 
     const submit = () => {
@@ -102,9 +117,14 @@
                 <span class="np-font">Icon</span>
                 <div class="n-box">
                     <div id="wandImage" class="pi-image wand-icon" style="background-image: url(/static/img/wands/wand_0000.png);"></div>
-                    <a onclick="randomWand()" class="n-tooltip">
+                    <a 
+                        onclick="randomWand()" 
+                        class="n-tooltip"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-html="true"
+                        title="<span class='np-font'>Randomize a wand!</span>">
                         <img class="pi-image" src="/static/img/faster_wands.png" width="24px">
-                        <span class="n-tooltip-content-text n-box np-font" style="top: 55%; left:15%;background-color: black;">Randomize a wand icon</span>
                     </a>
                     <input id="build-icon" name="build-icon" type="text" value="" hidden>
                 </div>
@@ -117,6 +137,7 @@
             <input id="spell-slots-value" name="spell-slots-value" type="number" value="1" hidden>
             <input id="build-date" name="build-date" type="text" hidden>
             <br> 
+            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Hooray!">Hover</a>
             <input onclick="submit()" type="button" value="send">
         </div>
     
@@ -130,22 +151,10 @@
             <span class="np-font">Spell list</span>
             <div class="spell-menu n-center">
                 {% for spell in spells %} 
-                <a class="n-tooltip spell-item {{spell['css_type']}}" onclick="addSpell({{loop.index}})">
+                <a 
+                    class="spell-item {{spell['css_type']}}" 
+                    onclick="addSpell({{loop.index}})">
                     {{spell['img_html'] | safe}}
-
-                    <div class="n-box n-tooltip-content" style="justify-content:center; width: 256px; background-color: rgba(0,0,0,1);">
-                        <div style="display:flex; flex-direction:column;">
-                            <span class="np-font">{{spell['title']}}</span>
-                            <br>
-                            <span class="np-font">{{spell['description']}}</span>
-                            <br>
-                            <div style="display:flex; justify-content: space-between;">
-                                <span class="np-font">Type:</span> 
-                                <span class="np-font">{{spell['Type']}}</span>
-                            </div>
-                        </div>
-
-                    </div>
                 </a>
                 {% endfor %}
             </div>

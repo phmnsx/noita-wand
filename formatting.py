@@ -21,7 +21,23 @@ class formatSpell:
                 return 'type-other'
 
     def toHTML(self, spell):
-        return f"""<div class="pi-image spell-icon-sm" style="background-image: url(/static/img/spells{spell['img']})"></div>"""
+        
+        return f"""<div 
+            class="pi-image spell-icon-sm" 
+            style="background-image: url(/static/img/spells{spell['img']})"
+            data-bs-toggle="popover" 
+            data-bs-trigger="hover focus" 
+            tabindex="0"
+            data-bs-html="true"
+            data-bs-placement="top"
+            data-bs-content="<div class='n-box' style='justify-content:center; background-color: rgba(0,0,0,1);''><div style='display:flex; flex-direction:column;'><span class='np-font'><b>{spell['title']}</b></span>
+                                
+                        <span class='np-font'>{spell['description']}</span>
+
+                        <span class='np-font'>Type:</span> <span class='np-font'>{spell['Type']}</span></div></div></div>
+                    "></div>
+                    
+            """
         
 class formatBuild:
     COMMENTS = []

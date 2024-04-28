@@ -24,6 +24,7 @@ class formatSpell:
         return f"""<div class="pi-image spell-icon-sm" style="background-image: url(/static/img/spells{spell['img']})"></div>"""
         
 class formatBuild:
+    COMMENTS = []
     def searchPage(self, page: int):
         BUILDS = create.get_builds()
         if page == 0:
@@ -53,11 +54,43 @@ class formatBuild:
             bld['spells'] = spell_form
             spell_form = []
             bld['author'] = main.get_user(bld['author-id'])
-            bld['comments'] = main.get_comments(bld['id'])
+            comments = main.get_comments(bld['id'])
 
-            for cmt in bld['comments']:
+            for cmt in comments:
                 cmt['author'] = main.get_user(cmt['author-id'])
+
+            self.COMMENTS = comments
+
+            comment_tree = []
+            for record in self.COMMENTS:
+                if record['parent-id'] == 0: # if this is the start of a tree
+                    comment_tree.append(self.create_tree(record))
+
+            bld['comments'] = comment_tree
+
+            lista = []
+            for cmt in comment_tree:
+                lista.append(cmt)
+                if len(cmt['children']) != 0: 
+                    lista.extend(self.get_children(cmt['children']))
+
+            bld['comments'] = lista
         
         return builds
-        
+
+    def create_tree(self,parent):
+        parent['children'] = []
+        for record in self.COMMENTS:
+            if record['parent-id'] == parent['id']:
+                parent['children'].append(self.create_tree(record))
+        return parent
+
+    def get_children(self,child):
+        childs = []
+        for record in child:
+            childs.append(record)
+            if len(record['children']) != 0: 
+                    childs.extend(self.get_children(record['children']))
+        return childs
+
 fmts = formatSpell()

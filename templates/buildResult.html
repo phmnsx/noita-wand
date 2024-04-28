@@ -1,0 +1,137 @@
+{% for bld in builds %}
+    <div id="build-{{bld['id']}}"class="my-3">
+        <div class="n-box mx-2">
+            <div class="n-container mt-3">
+                <div class="d-flex align-items-center justify-content-center" style="width: 256px;">
+                    <div class="d-flex pi-image wand-frame align-items-center justify-content-center">
+                        <img class="pi-image" src="/static/img/wands/wand_{{bld['image']}}.png" height="48px">
+                    </div>
+                </div>
+
+                <div class="w-100 mx-2">
+                    <span class="np-font" style="font-size: 24px;">{{bld['title']}}</span>
+                    <div class="spell-slots-frame" style="margin-bottom:0%; margin-top:4px;">
+                        {%for img in bld['spells']%}
+                        <a class="spell-item {{img['css_type']}}">
+                            {{img['img_html'] | safe}}
+                        </a>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+
+            <div class="align-self-center align-items-center justify-content-start d-flex mx-1 my-1">
+                <div class="w-100">
+                    <span class="np-font" style="font-size: 12px;">Created by</span>
+                    <img class="rounded-circle" src="{{bld['author']['img']}}" height="32px">
+                    <span class="np-font" style="font-size: 12px;">{{bld['author']['name']}}</span>
+                </div>
+                <span class="np-font">{{bld['likes']}}</span>
+                {% if 'liked-posts' in login_session['user']%}
+                {% for like in login_session['user']['liked-posts'] if bld['id'] == like%}
+                <a 
+                    onclick="updateLike('/updateLike/{{bld['id']}}?state={{state}}')"
+                    style="cursor:pointer;">
+                    <img class="pi-image" src="/static/liked.gif" height="36px"> 
+                </a>
+                {% else %}
+                <a 
+                    onclick="updateLike('/updateLike/{{bld['id']}}?state={{state}}')"
+                    style="cursor:pointer;">
+                    <img class="pi-image" src="/static/unliked.png" height="36px"> 
+                </a>
+
+                {% endfor %}
+                {% else %}
+                    <img class="pi-image" src="/static/unliked.png" height="36px"> 
+                {% endif %}
+                
+            </div>
+
+        <div class="d-flex mx-2 mt-3">
+            <div class="n-column w-100" style="box-shadow: 0 -3px 0 #948064; background-color: rgba(60, 60, 60, 0.7)">
+                <span class="np-font my-1 mx-1" style="font-size: small; color:gray; font-style:italic;">Description:</span>
+                <span class="np-font my-1 mx-1" style="font-size:medium">{{bld['description']}}</span>
+            </div>
+        </div>
+        {% if 'user' in login_session%}
+        <form id="{{bld['id']}}" class="d-flex align-items-center m-4" action="javascript:void(0);">
+            <img class="rounded-circle mx-3" src="{{login_session['user']['img']}}" height="48px">
+            <div class="w-100 mx-2">
+                <textarea
+                    id="comment-{{bld['id']}}"
+                    name="comment"
+                    class="np-font mx-2 w-100" 
+                    style="resize: none;box-shadow: 0 3px 0 #948064; background-color:rgba(60, 60, 60, 0.7); color:white;" 
+                    placeholder="Add a comment!"
+                    oninput="auto_grow(this)"
+                    rows="1"
+                    maxlength="400"></textarea>
+                <span id="comment-{{bld['id']}}-warning" class="np-font mx-2 " style="color:rgba(198,59,59,0.7)"></span>
+            </div>
+            <input id="date-{{bld['id']}}" type="text" name='date' hidden>
+            <input  
+                class="pi-image n-submit"
+                type="submit" 
+                style="
+                    width:36px; height:36px;
+                    border:none; 
+                    background-color:transparent;
+                    background-image: url(/static/send.png);
+                    "
+                value="">
+        </form>
+        {%endif%}
+        <div>
+        <div class="w-100" style="height:12px;background-color: rgba(148, 128, 100,0.6);"></div>
+        {% for cmt in bld['comments']%}
+            {% if not cmt['is-deleted']%}
+            <div class="my-3 py-2 px-2" style="margin-left: {{cmt['layer']*3}}%;">
+                <div class="d-flex align-items-center">
+                    <img class="pi-image" src="/static/corner.png" height="16px" width="16px" style="margin-bottom: 14px;">
+                    <div class="d-flex justify-content-between w-100">
+                        <div id="comments-{{cmt['id']}}" class="d-flex np-font">
+                            <img class="rounded-circle mx-3" src="{{cmt['author']['img']}}" height="38px">
+                            <div>
+                                <div class="d-flex align-items-end">
+                                    <span style="font-size: 12px;">{{cmt['author']['name']}}</span>
+                                    <span 
+                                        style="
+                                        font-size: 12px; 
+                                        margin-left:12px;
+                                        color: gray;">{{cmt['date']}}</span>
+                                </div>
+                                <span class="np-font" style="white-space: pre-line;">{{cmt['content']}}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            {% if 'user' in login_session %}
+                            {% if cmt['author-id'] == login_session['user']['id'] %}
+                                <a onclick="showConfirmDeleteComment({{cmt['id']}}, {{bld['id']}})">
+                                    Delete
+                                </a>
+                            {%endif%}
+                            {%endif%}
+
+                            {% if 'user' in login_session %}
+                            <a class="np-font" onclick="showReply({{cmt['id']}}, {{bld['id']}})" style="text-decoration: none;cursor: pointer;">Reply
+                            </a>
+                            {%endif%}
+
+                        </div>
+                    </div>
+                </div>
+                <div id="reply-section-{{cmt['id']}}"></div>
+            </div>
+            {%else%}
+                <div class="np-font" style="margin-left: {{cmt['layer']*5}}%;">
+                    <span style="font-style: italic; color:gray;">Deleted Comment</span>
+                </div>
+            {%endif%}
+            <div class="w-100" style="height:2px;background-color: rgba(148, 128, 100,0.6);"></div>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+    {% endfor %}

@@ -127,13 +127,13 @@ def createBuild():
 
     spell_type = ["Projectile","Static projectile", "Passive", "Utility", "Projectile modifier","Material", "Other", "Multicast"]
     
-    final_spells = []
-    for type in spell_type:
-        for spl in SPELLS:
-            if spl['Type'] == type:
-                final_spells.append(spl)
+    #final_spells = []
+    #for type in spell_type:
+    #    for spl in SPELLS:
+    #        if spl['Type'] == type:
+    #            final_spells.append(spl)
     updateUser()
-    return render_template("formBuild.html", spells=final_spells, login_session=login_session)
+    return render_template("formBuild.html", spells=SPELLS, login_session=login_session)
 
 @app.route("/addComment/<int:id>", methods=["GET","POST"])
 @login_required

@@ -254,15 +254,14 @@ def get_comments_id(id):
         return "Comment not found"
 
 def search_spell(name):
-    f = open('static/spells.json')
+    f = open('static/spells.json', encoding="utf8")
     spells = json.load(f)
     f.close()
     result = []
     for spell in spells:
-        if name in spell["title"]:
-            result.append()
-    
-    if result == '':
+        if name.lower() in spell["title"].lower():
+            result.append(spell)
+    if len(result) == 0:
         return "No spells found :("
     else:
         return result

@@ -56,7 +56,7 @@
             slots = 26
         }
         
-        fetch(`getBuildBySpell/${page}?state={{state}}`, {
+        fetch(`getBuildBySpell/${page}`, {
             method: "POST",
             body: JSON.stringify({
                 spells: spells,
@@ -138,7 +138,7 @@
         var date = document.getElementById('date-reply-'+id_parent).value
         var comment = document.getElementById(`text-reply-${id_parent}`).value
 
-        fetch(`/addReply/${id_build}/${id_parent}?state={{state}}`, {
+        fetch(`/addReply/${id_build}/${id_parent}`, {
             method: "POST",
             body: JSON.stringify({
                 comment: comment,
@@ -200,7 +200,7 @@
         var date = document.getElementById('date-'+this.id).value
         var comment = document.getElementById(`comment-${this.id}`).value
         
-        fetch(`/addComment/${this.id}?state={{state}}`,{
+        fetch(`/addComment/${this.id}`,{
             method: "POST",
             body: JSON.stringify({
                 comment: comment,
@@ -254,7 +254,7 @@
             </div>
             <div class="d-flex justify-content-center">
                 <a 
-                    onclick="removeComment('/removeComment/${id_comment}?state={{state}}&buildID=${id_build}')"
+                    onclick="removeComment('/removeComment/${id_comment}?buildID=${id_build}')"
                     class="n-box" 
                     style="background-color: rgba(198,59,59,0.7); cursor:pointer;">
                     <span>Delete Comment</span>

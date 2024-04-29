@@ -100,44 +100,37 @@ def searchBySpell():
 
 @app.route("/builds/getRecentBuilds/<int:page>")
 def getRecentBuilds(page):
-    if request.args.get('state') == login_session['state']:
-        builds = fmtb.searchPage(page, search=None)
+    builds = fmtb.searchPage(page, search=None)
 
-        if builds == "Invalid Page":
-            return redirect("/builds/search")
-        return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
-    else:
-        return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
+    if builds == "Invalid Page":
+        return redirect("/builds/search")
+    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+
 
 @app.route("/builds/getBuildBySpell/<int:page>", methods=["GET", "POST"])
 def getBuildBySpell(page):
-    if request.args.get('state') == login_session['state']:
-        currentSpells = []
-        f = open("static\spells.json", encoding="utf8")
-        SPELLS = json.load(f)
-        f.close()
-        if len(request.json['spells']) != 0:    
-            for spls in list(map(int,request.json['spells'].split(","))):
-                currentSpells.append(SPELLS[spls-1]['ID'])
-        else:
-            return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
-        
-        builds = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
-
-        if builds == "Invalid Page":
-            return redirect("/builds/search")
-        return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+    currentSpells = []
+    f = open("static\spells.json", encoding="utf8")
+    SPELLS = json.load(f)
+    f.close()
+    if len(request.json['spells']) != 0:    
+        for spls in list(map(int,request.json['spells'].split(","))):
+            currentSpells.append(SPELLS[spls-1]['ID'])
     else:
         return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
+        
+    builds = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
+
+    if builds == "Invalid Page":
+        return redirect("/builds/search")
+    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+
 
 @app.route("/builds/getBuildsbyTitle/<int:page>", methods=["GET", "POST"])
 def getBuildsbyTitle(page):
     if request.method == "GET":
-        if request.args.get('state') == login_session['state']:
-            builds = fmtb.searchPage(page, search=request.args.get('search'))
-            return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
-        else:
-            return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
+        builds = fmtb.searchPage(page, search=request.args.get('search'))
+        return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
     else:
         return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
 
@@ -161,9 +154,9 @@ def createBuild():
                   request.form.get('build-description'),
                   str(login_session['user']['id']))
         
-    for spl in SPELLS:
-        spl['css_type'] = fmts.toCssType(spl)
-        spl['img_html'] = fmts.toHTML(spl)
+        for spl in SPELLS:
+            spl['css_type'] = fmts.toCssType(spl)
+            spl['img_html'] = fmts.toHTML(spl)
 
     #spell_type = ["Projectile","Static projectile", "Passive", "Utility", "Projectile modifier","Material", "Other", "Multicast"]
     
@@ -172,28 +165,27 @@ def createBuild():
     #    for spl in SPELLS:
     #        if spl['Type'] == type:
     #            final_spells.append(spl)
-    updateUser()
-    return render_template("formBuild.html", spells=SPELLS, login_session=login_session)
+        updateUser()
+        return render_template("formBuild.html", spells=SPELLS, login_session=login_session)
+    else:
+        redirect("/")
 
 @app.route("/addComment/<int:id>", methods=["GET","POST"])
 @login_required
 def sendComment(id):
     if request.method == "POST":
-        if request.args.get('state') == login_session['state']:
-            date = request.json['date'][:24]
-            main.create_comment(
-                0,
-                COMMENT_POST,
-                request.json['comment'],
-                0,
-                str(login_session['user']['id']),
-                date,
-                id
-            )
-            updateUser()
-            return "OK"
-        else:
-            return redirect('/logout')
+        date = request.json['date'][:24]
+        main.create_comment(
+            0,
+            COMMENT_POST,
+            request.json['comment'],
+            0,
+            str(login_session['user']['id']),
+            date,
+            id
+        )
+        updateUser()
+        return "OK"
     else:
         return redirect('/')
 
@@ -201,24 +193,21 @@ def sendComment(id):
 @login_required
 def sendReply(build_id, parent_id):
     if request.method == "POST":
-        if request.args.get('state') == login_session['state']:
-            parent_layer = main.get_comments_id(parent_id)['layer']
-            date = request.json['date'][:24]
+        parent_layer = main.get_comments_id(parent_id)['layer']
+        date = request.json['date'][:24]
             
-            main.create_comment(
-                parent_id,
-                COMMENT_REPLY,
-                request.json['comment'],
-                parent_layer,
-                str(login_session['user']['id']),
-                date,
-                build_id
-            )
+        main.create_comment(
+            parent_id,
+            COMMENT_REPLY,
+            request.json['comment'],
+            parent_layer,
+            str(login_session['user']['id']),
+            date,
+            build_id
+        )
             
-            updateUser()
-            return "OK"
-        else:
-            return redirect('/logout')
+        updateUser()
+        return "OK"
     else:
         return redirect('/')
 
@@ -226,14 +215,9 @@ def sendReply(build_id, parent_id):
 @login_required
 def removeComment(id_comment):
     if request.method == "GET":
-        if request.args.get('state') == login_session['state']:
-            main.delete_comment(id_comment)
-            
-            id = request.args.get('buildID')
-            updateUser()
-            return 'OK'
-        else:
-            return redirect('/logout')
+        main.delete_comment(id_comment)
+        updateUser()
+        return 'OK'
     else:
         return redirect('/')
 
@@ -241,15 +225,12 @@ def removeComment(id_comment):
 @login_required
 def likeBuild(id):
     if request.method == "GET":
-        if request.args.get('state') == login_session['state']:
-            main.like(login_session['user']['id'], id)
-            updateUser()
-            if login_session['page-search'] > 0:
-                return 'redirect("/builds/search/"+str(login_session[`page-search`])+"#build-"+str(id))'
-            else:
-                return 'redirect("/builds/search"+"#build-"+str(id))'
+        main.like(login_session['user']['id'], id)
+        updateUser()
+        if login_session['page-search'] > 0:
+            return 'redirect("/builds/search/"+str(login_session[`page-search`])+"#build-"+str(id))'
         else:
-            return redirect('/logout')
+            return 'redirect("/builds/search"+"#build-"+str(id))'
     else:
         updateUser()
         return redirect('/')

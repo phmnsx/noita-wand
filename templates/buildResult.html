@@ -31,13 +31,13 @@
                 {% if 'liked-posts' in login_session['user']%}
                 {% for like in login_session['user']['liked-posts'] if bld['id'] == like%}
                 <a 
-                    onclick="updateLike('/updateLike/{{bld['id']}}?state={{state}}')"
+                    onclick="updateLike('/updateLike/{{bld['id']}}')"
                     style="cursor:pointer;">
                     <img class="pi-image" src="/static/liked.gif" height="36px"> 
                 </a>
                 {% else %}
                 <a 
-                    onclick="updateLike('/updateLike/{{bld['id']}}?state={{state}}')"
+                    onclick="updateLike('/updateLike/{{bld['id']}}')"
                     style="cursor:pointer;">
                     <img class="pi-image" src="/static/unliked.png" height="36px"> 
                 </a>

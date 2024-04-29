@@ -5,6 +5,7 @@
 }
 
 .spell-slots-frame{
+    width: fit-content;
     margin-top: 4%;
     margin-bottom: 4%;
     display: grid;

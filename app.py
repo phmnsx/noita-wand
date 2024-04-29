@@ -116,10 +116,12 @@ def getBuildBySpell(page):
         f = open("static\spells.json", encoding="utf8")
         SPELLS = json.load(f)
         f.close()
-
-        for spls in list(map(int,request.json['spells'].split(","))):
-            currentSpells.append(SPELLS[spls-1]['ID'])
-
+        if len(request.json['spells']) != 0:    
+            for spls in list(map(int,request.json['spells'].split(","))):
+                currentSpells.append(SPELLS[spls-1]['ID'])
+        else:
+            return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
+        
         builds = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
 
         if builds == "Invalid Page":

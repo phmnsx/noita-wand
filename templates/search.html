@@ -39,7 +39,6 @@
 </style>
 
 <script>
-    var page = {{page}}
     const TYPE_RECENT = "recent"
     const TYPE_NAME = "name"
     window.onload = (e) => {
@@ -49,13 +48,13 @@
         var currentSearchType = document.getElementById("current-search-type").value
 
         if(currentSearchType == TYPE_RECENT){
-            getRecentBuilds(page)
+            getRecentBuilds()
         } else if(currentSearchType == TYPE_NAME){
-            getSearchResult(page)
+            getSearchResult()
         }
     }
     const getRecentBuilds = () => {
-        fetch($`getRecentBuilds/${page}?state={{state}}`, {
+        fetch(`getRecentBuilds/{{page}}?state={{state}}`, {
             method: "GET"
         })
         .then(response => {

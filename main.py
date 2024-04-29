@@ -64,7 +64,7 @@ def search_name(name):
     r.close
     result = []
     for item in search:
-        if set(item["title"]).issubset(set(name)):
+        if name.lower() == item["title"].lower():
             result.append(item)
     if len(result) == 0:
         return "No results."

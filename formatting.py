@@ -39,18 +39,19 @@ class formatSpell:
         
 class formatBuild:
     COMMENTS = []
-    def searchPage(self, page: int, search=None, spells_list=[], slots=0):
+    def searchPage(self, page: int, search=None, spells_list=[], slots=0, user_id=None, type_user=""):
         if search != None:
             BUILDS = main.search_name(search)
         elif len(spells_list) != 0:
             BUILDS = main.search_blind(slots, spells_list)
+        elif user_id != None:
+            if type_user == "LIKED":
+                BUILDS = create.liked_builds(user_id)
+            elif type_user == "CREATED":
+                BUILDS = create.user_builds(user_id)
         else:
             BUILDS = create.get_builds()
 
-        if search == "": 
-            BUILDS = "No results."
-            
-        
         if type(BUILDS) == list:        
             if page == 0:
                 MIN_PAGE = 0
@@ -59,6 +60,7 @@ class formatBuild:
 
             if MIN_PAGE > len(BUILDS):
                 return "Invalid Page"
+            
             if len(BUILDS) > 10*page+10:
                 MAX_PAGE = 10*page+10
             else:
@@ -102,7 +104,7 @@ class formatBuild:
 
                 bld['comments'] = lista
         else:
-            return BUILDS
+            return "No results."
         return builds
 
     def create_tree(self,parent):

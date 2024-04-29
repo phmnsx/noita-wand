@@ -22,7 +22,8 @@
             </div>
 
             <div class="align-self-center align-items-center justify-content-start d-flex mx-1 my-1">
-                <div class="w-100">
+                <div class="w-100" onclick="window.location.href=`/user/{{bld['author']['id']}}`"
+                style="cursor: pointer;">
                     <span class="np-font" style="font-size: 12px;">Created by</span>
                     <img class="rounded-circle" src="{{bld['author']['img']}}" height="32px">
                     <span class="np-font" style="font-size: 12px;">{{bld['author']['name']}}</span>
@@ -92,10 +93,17 @@
                     <img class="pi-image" src="/static/corner.png" height="16px" width="16px" style="margin-bottom: 14px;">
                     <div class="d-flex justify-content-between w-100">
                         <div id="comments-{{cmt['id']}}" class="d-flex np-font">
-                            <img class="rounded-circle mx-3" src="{{cmt['author']['img']}}" height="38px">
+                            <img 
+                                onclick="window.location.href=`/user/{{cmt['author']['id']}}`"
+                                style="cursor: pointer;"
+                                class="rounded-circle mx-3" 
+                                src="{{cmt['author']['img']}}" 
+                                height="38px">
                             <div>
                                 <div class="d-flex align-items-end">
-                                    <span style="font-size: 12px;">{{cmt['author']['name']}}</span>
+                                    <span 
+                                    onclick="window.location.href=`/user/{{cmt['author']['id']}}`"
+                                    style="font-size: 12px; cursor: pointer;">{{cmt['author']['name']}}</span>
                                     <span 
                                         style="
                                         font-size: 12px; 
@@ -126,7 +134,7 @@
                 <div id="reply-section-{{cmt['id']}}"></div>
             </div>
             {%else%}
-                <div class="np-font" style="margin-left:  {{2+cmt['layer']*5}}%;">
+                <div class="np-font" style="margin-left:  {{1+cmt['layer']*5}}%;"> 
                     <span style="font-style: italic; color:gray;">Deleted Comment</span>
                 </div>
             {%endif%}
@@ -137,7 +145,7 @@
     </div>
     {% endfor %}
 {%else%}
-<div class="n-box np-font">
+<div id="no-result" class="n-box np-font">
     No results for your search.
 </div>
 {%endif%}

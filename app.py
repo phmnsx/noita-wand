@@ -106,7 +106,6 @@ def getRecentBuilds(page):
         return redirect("/builds/search")
     return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
 
-
 @app.route("/builds/getBuildBySpell/<int:page>", methods=["GET", "POST"])
 def getBuildBySpell(page):
     currentSpells = []
@@ -125,14 +124,13 @@ def getBuildBySpell(page):
         return redirect("/builds/search")
     return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
 
-
 @app.route("/builds/getBuildsbyTitle/<int:page>", methods=["GET", "POST"])
 def getBuildsbyTitle(page):
     if request.method == "GET":
         builds = fmtb.searchPage(page, search=request.args.get('search'))
         return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
     else:
-        return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
+        return render_template("buildResult.html", builds="No results.", state=login_session['state'], login_session=login_session)
 
 @app.route("/builds/create", methods=["GET", "POST"])
 @login_required
@@ -153,10 +151,10 @@ def createBuild():
                   date, 
                   request.form.get('build-description'),
                   str(login_session['user']['id']))
-        
-        for spl in SPELLS:
-            spl['css_type'] = fmts.toCssType(spl)
-            spl['img_html'] = fmts.toHTML(spl)
+    
+    for spl in SPELLS:
+        spl['css_type'] = fmts.toCssType(spl)
+        spl['img_html'] = fmts.toHTML(spl)
 
     #spell_type = ["Projectile","Static projectile", "Passive", "Utility", "Projectile modifier","Material", "Other", "Multicast"]
     
@@ -165,10 +163,8 @@ def createBuild():
     #    for spl in SPELLS:
     #        if spl['Type'] == type:
     #            final_spells.append(spl)
-        updateUser()
-        return render_template("formBuild.html", spells=SPELLS, login_session=login_session)
-    else:
-        redirect("/")
+    updateUser()
+    return render_template("formBuild.html", spells=SPELLS, login_session=login_session)
 
 @app.route("/addComment/<int:id>", methods=["GET","POST"])
 @login_required
@@ -221,6 +217,12 @@ def removeComment(id_comment):
     else:
         return redirect('/')
 
+@app.route("/user/<string:id>")
+def userPage(id):
+    updateUser()
+    user = main.get_user(id)
+    return render_template("userPage.html", user=user, login_session=login_session)
+
 @app.route("/updateLike/<int:id>", methods=["GET"])
 @login_required
 def likeBuild(id):
@@ -234,6 +236,18 @@ def likeBuild(id):
     else:
         updateUser()
         return redirect('/')
+
+@app.route("/getUserLikes/<string:id>/<int:page>", methods=["GET"])
+def getUserLikes(id, page):
+    builds = fmtb.searchPage(page, user_id=id, type_user="LIKED")
+    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+
+@app.route("/getUserBuilds/<string:id>/<int:page>", methods=["GET"])
+def getUserBuilds(id, page):
+    builds = fmtb.searchPage(page, user_id=id, type_user="CREATED")
+    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+
+
 
 def startUser():
     resp = {}

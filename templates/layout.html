@@ -20,16 +20,20 @@
                 <a href="/">Noita Builds</a>
             </span>
             {% if 'access_token' in login_session %}
-                <div class="n-box n-container">
+                <div 
+                    class="n-box n-container" 
+                    onclick="window.location.href=`/user/{{login_session['user']['id']}}`"
+                    style="cursor:pointer;">
                     <img class="rounded-circle" src="{{login_session['user']['img']}}" height="48px">
                     
                     <div class="n-column">
                         <span class="mx-3 np-font">{{login_session['user']['name']}}</span>
 
-                        <a href="/logout" class="n-tooltip">
-                            <img class="pi-image" src="/static/img/spells/42px-Spell_decelerating_shot.png" width="16px">
-                            <span class="n-tooltip-content-text n-box np-font">Log out</span>
-                        </a>
+                        <div class="d-flex justify-content-end">
+                            <a href="/logout" class="" style="width: fit-content;">
+                                <span class="mx-3 np-font" style="font-size:smaller;">Log out</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             {% else %}

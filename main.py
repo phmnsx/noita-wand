@@ -49,7 +49,7 @@ def search_blind(size, spell):
     r.close()
     result = []
     for item in search:
-        if item["size"] <= size and spell in item["spells"]:
+        if item["size"] <= size and set(spell).issubset(item["spells"]):
             result.append(item)
     if len(result) == 0:
         return "No results."

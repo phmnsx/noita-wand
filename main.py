@@ -232,7 +232,7 @@ def create_user(id, name, img):
     f.close()
 
 def get_comments(id):
-    f = open('dbc.json', encoding="utf8")
+    f = open("dbc.json", encoding="utf8")
     comments = json.load(f)
     f.close
     comments.reverse()

@@ -1,4 +1,4 @@
-
+{%if builds != "No results."%}
 {% for bld in builds %}
     <div id="build-{{bld['id']}}"class="my-3">
         <div class="n-box mx-2">
@@ -136,3 +136,8 @@
     </div>
     </div>
     {% endfor %}
+{%else%}
+<div class="n-box np-font">
+    No results for your search.
+</div>
+{%endif%}

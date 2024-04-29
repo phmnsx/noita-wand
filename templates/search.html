@@ -39,19 +39,31 @@
 </style>
 
 <script>
+    var page = {{page}}
+    const TYPE_RECENT = "recent"
+    const TYPE_NAME = "name"
     window.onload = (e) => {
-        updateSearchResult();
+        getRecentBuilds();
     }
-    
     const updateSearchResult = () => {
-        fetch("getRecentBuilds/{{page}}?state={{state}}", {
+        var currentSearchType = document.getElementById("current-search-type").value
+
+        if(currentSearchType == TYPE_RECENT){
+            getRecentBuilds(page)
+        } else if(currentSearchType == TYPE_NAME){
+            getSearchResult(page)
+        }
+    }
+    const getRecentBuilds = () => {
+        fetch($`getRecentBuilds/${page}?state={{state}}`, {
             method: "GET"
         })
         .then(response => {
             return response.text();
         })
         .then(html =>  {
-            document.getElementById("recent-builds").innerHTML = html
+            document.getElementById("current-search-type").value = TYPE_RECENT
+            document.getElementById("builds-result").innerHTML = html
             var formsCollection = document.getElementsByTagName("form");
             for(var i=0;i<formsCollection.length;i++)
             {
@@ -128,6 +140,7 @@
             `
         } else {
             document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
+            updateSearchResult()
         }
     }
 
@@ -223,13 +236,50 @@
       }
     {%endif%}
 
-    function showSearchBox() {
-        //document.getElementById("search-box").innerHTML =
-        //document.getElementById("search-box").classList.add("n-box")
+    function getSearchResult() {
+        var search = document.getElementById("search-query").value
+        fetch(`getBuildsbyTitle/{{page}}?state={{state}}&search=${search}`, {
+            method: "GET"
+        })
+        .then(response => {
+            return response.text();
+        })
+        .then(html =>  {
+            document.getElementById("builds-result").innerHTML = html
+            document.getElementById("search-title").innerHTML = "Results"
+            document.getElementById("current-search-type").value = TYPE_NAME
+            var formsCollection = document.getElementsByTagName("form");
+
+            for(var i=0;i<formsCollection.length;i++)
+            {
+                formsCollection[i].addEventListener("submit", addComment,{ once: false })
+            }
+
+            document.getElementById('loading-build').style.display = 'none'
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        })
     }
 </script>
 
 <div class="n-column">
+    <div class="d-flex justify-content-center">
+        <a href="/builds/searchBySpell" class="n-btn n-box n-container n-center">
+            <span class="n-btn-title np-font">Search by Spells</span>
+        </a>
+    
+        <a onclick="getRecentBuilds()" class="n-btn n-box n-container n-center" style="margin-left: 2%;">
+            <span class="n-btn-title np-font">Recent Builds</span>
+        </a>
+    </div>
+
     <div id="search-box" class="d-flex justify-content-center np-font n-box">
         <input name="search-query" id="search-query" class="n-box w-100" placeholder="Search..." type="text" onclick="getSearchResults(this)">
         <a
@@ -239,10 +289,11 @@
         </a>
     </div>
 
-    <span class="nt-font n-title text-center">Recent Builds</span>
+    <span id="search-title" class="nt-font n-title text-center">Recent Builds</span>
+    <input id="current-search-type" hidden>
     <span id="loading-build" class="np-font n-title text-center" style="color: white;">Loading builds...</span>
 
-    <div id="recent-builds" class="">
+    <div id="builds-result" class="">
     </div>
     <span>
     </span>

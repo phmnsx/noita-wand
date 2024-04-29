@@ -39,57 +39,70 @@ class formatSpell:
         
 class formatBuild:
     COMMENTS = []
-    def searchPage(self, page: int):
-        BUILDS = create.get_builds()
-        if page == 0:
-            MIN_PAGE = 0
+    def searchPage(self, page: int, search=None, spells_list=[], slots=0):
+        if search != None:
+            BUILDS = main.search_name(search)
+        elif len(spells_list) != 0:
+            BUILDS = main.search_blind(slots, spells_list)
         else:
-            MIN_PAGE = 1+10*page
+            BUILDS = create.get_builds()
 
-        if MIN_PAGE > len(BUILDS):
-            return "Invalid Page"
-        if len(BUILDS) > 10*page+10:
-            MAX_PAGE = 10*page+10
-        else:
-            MAX_PAGE = len(BUILDS)
-
-        spell_form = []
-        builds = BUILDS[MIN_PAGE:MAX_PAGE]
-        for bld in builds:
-            for id in bld['spells']:
-                try:
-                    spell = spells.get_spell(id)
-                    spell_form.append(spell)
-                    spell_form[len(spell_form)-1]['css_type'] = fmts.toCssType(spell)
-                    spell_form[len(spell_form)-1]['img_html'] = fmts.toHTML(spell)
-                except:
-                    print("lol")
+        if search == "": 
+            BUILDS = "No results."
             
-            bld['spells'] = spell_form
-            spell_form = []
-            bld['author'] = main.get_user(bld['author-id'])
-            comments = main.get_comments(bld['id'])
-
-            for cmt in comments:
-                cmt['author'] = main.get_user(cmt['author-id'])
-
-            self.COMMENTS = comments
-
-            comment_tree = []
-            for record in self.COMMENTS:
-                if record['parent-id'] == 0: # if this is the start of a tree
-                    comment_tree.append(self.create_tree(record))
-
-            bld['comments'] = comment_tree
-
-            lista = []
-            for cmt in comment_tree:
-                lista.append(cmt)
-                if len(cmt['children']) != 0: 
-                    lista.extend(self.get_children(cmt['children']))
-
-            bld['comments'] = lista
         
+        if type(BUILDS) == list:        
+            if page == 0:
+                MIN_PAGE = 0
+            else:
+                MIN_PAGE = 1+10*page
+
+            if MIN_PAGE > len(BUILDS):
+                return "Invalid Page"
+            if len(BUILDS) > 10*page+10:
+                MAX_PAGE = 10*page+10
+            else:
+                MAX_PAGE = len(BUILDS)
+
+            spell_form = []
+            builds = BUILDS[MIN_PAGE:MAX_PAGE]
+
+            for bld in builds:
+                for id in bld['spells']:
+                    try:
+                        spell = spells.get_spell(id)
+                        spell_form.append(spell)
+                        spell_form[len(spell_form)-1]['css_type'] = fmts.toCssType(spell)
+                        spell_form[len(spell_form)-1]['img_html'] = fmts.toHTML(spell)
+                    except:
+                        print("lol")
+                
+                bld['spells'] = spell_form
+                spell_form = []
+                bld['author'] = main.get_user(bld['author-id'])
+                comments = main.get_comments(bld['id'])
+
+                for cmt in comments:
+                    cmt['author'] = main.get_user(cmt['author-id'])
+
+                self.COMMENTS = comments
+
+                comment_tree = []
+                for record in self.COMMENTS:
+                    if record['parent-id'] == 0: # if this is the start of a tree
+                        comment_tree.append(self.create_tree(record))
+
+                bld['comments'] = comment_tree
+
+                lista = []
+                for cmt in comment_tree:
+                    lista.append(cmt)
+                    if len(cmt['children']) != 0: 
+                        lista.extend(self.get_children(cmt['children']))
+
+                bld['comments'] = lista
+        else:
+            return BUILDS
         return builds
 
     def create_tree(self,parent):

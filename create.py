@@ -90,8 +90,39 @@ def delete_build(id):
     json.dump(builds, f, indent=2, sort_keys=True)
     f.close()
 
-def reverse_builds():
+def liked_builds(userid):
+    f = open('dbusers.json', encoding="utf8")
+    users = json.load(f)
+    f.close()
     f = open('db.json', encoding="utf8")
     builds = json.load(f)
-    f.close
-    builds.reverse
+    f.close()
+    founduser = {}
+    for user in users:
+        if user["id"] ==  userid:
+            founduser = user
+            break
+    likedbuilds = []
+    for build in builds:
+        if build["id"] in founduser["liked-posts"]:
+            likedbuilds.append(build)
+    
+    if len(likedbuilds) == 0:
+        return "This user has no liked posts :("
+    else:
+        likedbuilds.reverse
+        return likedbuilds
+
+def user_builds(userid):
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close()
+    userbuilds = []
+    for build in builds:
+        if build["author-id"] == userid:
+            userbuilds.append(build)
+    if len(userbuilds) == 0:
+        return "This user has no builds yet :("
+    else:
+        userbuilds.reverse
+        return userbuilds

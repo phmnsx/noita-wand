@@ -108,7 +108,7 @@ def liked_builds(userid):
             likedbuilds.append(build)
     
     if len(likedbuilds) == 0:
-        return "This user has no liked posts :("
+        return False
     else:
         likedbuilds.reverse
         return likedbuilds
@@ -122,7 +122,7 @@ def user_builds(userid):
         if build["author-id"] == userid:
             userbuilds.append(build)
     if len(userbuilds) == 0:
-        return "This user has no builds yet :("
+        return False
     else:
         userbuilds.reverse
         return userbuilds

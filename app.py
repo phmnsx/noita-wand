@@ -79,8 +79,6 @@ def logout():
 
 @app.route("/builds/search")
 def searchBuild_main():
-    builds = fmtb.searchPage(0)
-
     login_session['page-search'] = 0
     return render_template("search.html", page=0, state=updateState(), login_session=login_session)
 
@@ -89,10 +87,21 @@ def searchBuild(page):
     login_session['page-search'] = page
     return render_template("search.html", page=page, state=updateState(), login_session=login_session)
 
+@app.route("/builds/searchBySpell")
+def searchBySpell():
+    f = open("static\spells.json", encoding="utf8")
+    SPELLS = json.load(f)
+    f.close()
+    for spl in SPELLS:
+        spl['css_type'] = fmts.toCssType(spl)
+        spl['img_html'] = fmts.toHTML(spl)
+    login_session['page-search'] = 0
+    return render_template("searchbySpell.html", page=0, spells=SPELLS, state=updateState(), login_session=login_session)
+
 @app.route("/builds/getRecentBuilds/<int:page>")
 def getRecentBuilds(page):
     if request.args.get('state') == login_session['state']:
-        builds = fmtb.searchPage(page)
+        builds = fmtb.searchPage(page, search=None)
 
         if builds == "Invalid Page":
             return redirect("/builds/search")
@@ -100,9 +109,34 @@ def getRecentBuilds(page):
     else:
         return {"error": "Invalid State value"}
 
-@app.route("/builds/getBlindBuilds/", methods=["GET", "POST"])
-def getBlindBuilds():
+@app.route("/builds/getBuildBySpell/<int:page>", methods=["GET", "POST"])
+def getBuildBySpell(page):
+    if request.args.get('state') == login_session['state']:
+        currentSpells = []
+        f = open("static\spells.json", encoding="utf8")
+        SPELLS = json.load(f)
+        f.close()
+
+        for spls in list(map(int,request.json['spells'].split(","))):
+            currentSpells.append(SPELLS[spls-1]['ID'])
+
+        builds = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
+
+        if builds == "Invalid Page":
+            return redirect("/builds/search")
+        return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+    else:
+        return {"error": "Invalid State value"}
+
+@app.route("/builds/getBuildsbyTitle/<int:page>", methods=["GET", "POST"])
+def getBuildsbyTitle(page):
     if request.method == "GET":
+        if request.args.get('state') == login_session['state']:
+            builds = fmtb.searchPage(page, search=request.args.get('search'))
+            return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+        else:
+            return {"error": "Invalid State value"}
+    else:
         return redirect("/")
 
 @app.route("/builds/create", methods=["GET", "POST"])
@@ -114,7 +148,6 @@ def createBuild():
 
     if request.method == "POST":
         currentSpells = []
-        print(request.form.get('spell-list'))
         for spls in list(map(int,request.form.get('spell-list').split(","))):
             currentSpells.append(SPELLS[spls-1]['ID'])
 
@@ -130,7 +163,7 @@ def createBuild():
         spl['css_type'] = fmts.toCssType(spl)
         spl['img_html'] = fmts.toHTML(spl)
 
-    spell_type = ["Projectile","Static projectile", "Passive", "Utility", "Projectile modifier","Material", "Other", "Multicast"]
+    #spell_type = ["Projectile","Static projectile", "Passive", "Utility", "Projectile modifier","Material", "Other", "Multicast"]
     
     #final_spells = []
     #for type in spell_type:

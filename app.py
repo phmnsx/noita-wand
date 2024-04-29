@@ -107,7 +107,7 @@ def getRecentBuilds(page):
             return redirect("/builds/search")
         return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
     else:
-        return redirect("/logout")
+        return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
 
 @app.route("/builds/getBuildBySpell/<int:page>", methods=["GET", "POST"])
 def getBuildBySpell(page):
@@ -128,7 +128,7 @@ def getBuildBySpell(page):
             return redirect("/builds/search")
         return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
     else:
-        return redirect("/logout")
+        return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
 
 @app.route("/builds/getBuildsbyTitle/<int:page>", methods=["GET", "POST"])
 def getBuildsbyTitle(page):
@@ -137,9 +137,9 @@ def getBuildsbyTitle(page):
             builds = fmtb.searchPage(page, search=request.args.get('search'))
             return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
         else:
-            return redirect("/logout")
+            return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
     else:
-        return redirect("/")
+        return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
 
 @app.route("/builds/create", methods=["GET", "POST"])
 @login_required

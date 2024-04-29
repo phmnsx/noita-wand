@@ -115,6 +115,9 @@
 
     const defineSpellsSlots = () => {
         let amount = document.getElementById('spell-slots-value').value
+        if(amount > 26){
+            amount = 26
+        }
         document.getElementById('spell-slots').innerHTML = ""
 
         for (let i=0; i < parseInt(amount); i++){

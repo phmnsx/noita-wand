@@ -50,6 +50,12 @@
     const getSearchResult = () => {
         var spells =  document.getElementById('spell-list').value
         var slots =  document.getElementById('spell-slots-value').value
+        slots = parseInt(slots)
+        
+        if(slots>26){
+            slots = 26
+        }
+        
         fetch(`getBuildBySpell/${page}?state={{state}}`, {
             method: "POST",
             body: JSON.stringify({

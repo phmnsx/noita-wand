@@ -102,15 +102,15 @@ def liked_builds(userid):
         if user["id"] ==  userid:
             founduser = user
             break
+    founduser["liked-posts"].reverse()
     likedbuilds = []
-    for build in builds:
-        for i in range(len(founduser["liked-posts"])):
-            if build["id"] in founduser[i]["liked-posts"]:
+    for i in range(len(founduser["liked-posts"])):
+        for build in builds:
+            if build["id"] == founduser["liked-posts"][i]:
                 likedbuilds.append(build)
     if len(likedbuilds) == 0:
         return False
     else:
-        likedbuilds.reverse()
         return likedbuilds
 
 def user_builds(userid):
@@ -126,3 +126,5 @@ def user_builds(userid):
     else:
         userbuilds.reverse()
         return userbuilds
+
+liked_builds("71940808")

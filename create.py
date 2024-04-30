@@ -110,7 +110,7 @@ def liked_builds(userid):
     if len(likedbuilds) == 0:
         return False
     else:
-        likedbuilds.reverse
+        likedbuilds.reverse()
         return likedbuilds
 
 def user_builds(userid):
@@ -124,5 +124,5 @@ def user_builds(userid):
     if len(userbuilds) == 0:
         return False
     else:
-        userbuilds.reverse
+        userbuilds.reverse()
         return userbuilds

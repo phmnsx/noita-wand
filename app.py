@@ -98,7 +98,6 @@ def searchBySpell():
 @app.route("/builds/getRecentBuilds/<int:page>")
 def getRecentBuilds(page):
     builds, next_page = fmtb.searchPage(page, search=None)
-    print(next_page)
     if builds == "Invalid Page":
         return redirect("/builds/search")
     return render_template("buildResult.html", page=page, next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
@@ -113,13 +112,13 @@ def getBuildBySpell(page):
         for spls in list(map(int,request.json['spells'].split(","))):
             currentSpells.append(SPELLS[spls-1]['ID'])
     else:
-        return render_template("buildResult.html", next_page=False, builds="No results.", state=login_session['state'],login_session=login_session)
+        return render_template("buildResult.html", next_page=False,page=page, builds="No results.", state=login_session['state'],login_session=login_session)
         
     builds, next_page = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
 
     if builds == "Invalid Page":
         return redirect("/builds/search")
-    return render_template("buildResult.html", next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
+    return render_template("buildResult.html", next_page=next_page, page=page, builds=builds,state=login_session['state'],login_session=login_session)
 
 @app.route("/builds/getBuildsbyTitle/<int:page>", methods=["GET", "POST"])
 def getBuildsbyTitle(page):
@@ -244,6 +243,18 @@ def getUserLikes(id, page):
 def getUserBuilds(id, page):
     builds, next_page = fmtb.searchPage(page, user_id=id, type_user="CREATED")
     return render_template("buildResult.html", page=page, next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
+
+@app.route("/deleteBuild/<int:build_id>", methods=["POST"])
+@login_required
+def deleteBuild(build_id):
+    if request.method == "POST":
+        if build.is_build_user(build_id, login_session['user']['id']):
+            print(build_id)
+            updateUser()
+            print(build.delete_build(build_id))
+            return "OK"
+    else:
+        return redirect('/')
 
 def startUser():
     resp = {}

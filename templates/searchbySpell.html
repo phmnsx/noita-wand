@@ -43,11 +43,12 @@
 </style>
 
 <script>
-    var page = 0
+    var current_page = 0
     var addedSpells = []
     const SPELLS = {{spells | tojson}};
 
-    const getSearchResult = () => {
+    const getSearchResult = (page) => {
+        current_page = page
         var spells =  document.getElementById('spell-list').value
         var slots =  document.getElementById('spell-slots-value').value
         slots = parseInt(slots)
@@ -153,7 +154,7 @@
         })
         .then(() => {
             document.getElementById(`reply-section-${id_parent}`).innerHTML == ""
-            getSearchResult()
+            getSearchResult(current_page)
         })
     }
     
@@ -192,7 +193,7 @@
             `
         } else {
             document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
-            getSearchResult()
+            getSearchResult(current_page)
         }
     }
 
@@ -214,7 +215,7 @@
             }
         })
         .then(response => {
-            getSearchResult()
+            getSearchResult(current_page)
         })  
     }
 
@@ -226,8 +227,8 @@
             }
         })
         .then(response => {
-            document.getElementById('delete-comment-warning').style.display = 'none'
-            getSearchResult()
+            document.getElementById('delete-warning').style.display = 'none'
+            getSearchResult(current_page)
         })
     }
 
@@ -239,7 +240,7 @@
             }
         })
         .then(response => {
-            getSearchResult()
+            getSearchResult(current_page)
         })
     }
 
@@ -248,7 +249,7 @@
         comment.classList.add("n-box")
         comment_html = comment.outerHTML
 
-        document.getElementById("delete-comment-warning").innerHTML =
+        document.getElementById("delete-warning").innerHTML =
         `
         <div class="n-box">
             ${comment_html}
@@ -266,13 +267,13 @@
                 <div 
                     class="n-box"
                     style="cursor:pointer;"
-                    onclick="document.getElementById('delete-comment-warning').style.display = 'none';"
+                    onclick="document.getElementById('delete-warning').style.display = 'none';"
                     >Cancel</div>
                 </div> 
             </div>
         `
 
-        document.getElementById("delete-comment-warning").style.display = "flex"
+        document.getElementById("delete-warning").style.display = "flex"
     }
 
     function auto_grow(element) {
@@ -286,6 +287,61 @@
             document.getElementById(element.id+"-warning").innerHTML = ""
         }
       }
+
+      function showDeleteBuild(build_id){
+        build = document.getElementById("build-"+build_id).cloneNode(true)
+
+        //im so sorry future person
+        //REMOVES THE COMMENT SECTION
+        build.children[0].children[3].innerHTML = ""
+        //REMOVES THE DELETE BUILD BUTTON
+        build.children[0].children[0].children[2].innerHTML = ""
+        //REMOVE THE LIKE BUTTON FUNCTIONALITY
+        build.children[0].children[1].children[2].style.cursor = ""
+        build.children[0].children[1].children[2].setAttribute('onclick', '')
+
+        build.classList.add("n-box")
+        build_html = build.outerHTML
+
+        document.getElementById("delete-warning").innerHTML =
+        `
+        <div class="n-box">
+            ${build_html}
+            <div style="text-align:center;">
+                <span>Are you sure you want to delete this build?</span>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a 
+                    onclick="deleteBuild(${build_id})"
+                    class="n-box" 
+                    style="background-color: rgba(198,59,59,0.7); cursor:pointer;">
+                    <span>Delete Build</span>
+                </a>
+
+                <div 
+                    class="n-box"
+                    style="cursor:pointer;"
+                    onclick="document.getElementById('delete-warning').style.display = 'none';"
+                    >Cancel</div>
+                </div> 
+            </div>
+        `
+
+        document.getElementById("delete-warning").style.display = "flex"
+    }
+
+    function deleteBuild(id) {
+        fetch(`/deleteBuild/${id}`,{
+            method: "POST"
+        })
+        .then(response =>{
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById('delete-warning').style.display = 'none'
+            getSearchResult(current_page)
+        })
+    }
     {%endif%}
 </script>
 
@@ -299,7 +355,7 @@
         <div id="spell-slots" class="spell-slots-frame">           
         </div>
         <a
-            onclick="getSearchResult()"
+            onclick="getSearchResult(0)"
             style="cursor:pointer;">
             <img class="pi-image" src="/static/search.png" height="64" width="64">
         </a>
@@ -320,7 +376,7 @@
         </div>
     </div>
 
-    <aside id="delete-comment-warning" class="warning-screen np-font" style="display:none">
+    <aside id="delete-warning" class="warning-screen np-font" style="display:none">
     </aside>
 </div>
 {% endblock %}

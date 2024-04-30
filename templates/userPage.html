@@ -1,7 +1,42 @@
 {% extends "layout.html" %}
 {% block title %} Noita Builds{% endblock %}
 {%block main%}
+<head>
+    <link href="/static/spellBorders.css"  rel="stylesheet" >
+</head>
 <style>
+    .wand-icon{
+        width: 128px; height: 64px;
+    }
+    .spell-icon-sm{
+        width: 32px; height: 32px;
+    }
+
+    .spell-icon-lg{
+        width: 64px; height: 64px;
+    }
+
+    .spell-menu{
+        display: grid;
+        row-gap: 8px;
+        column-gap: 8px;
+        grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
+    }
+
+    .spell-item{
+        width: 32px; height: 32px;
+    }
+
+    .popover{
+        padding: 0px;
+        text-align: center;
+        background-color: black;
+        white-space: pre-line;
+    }
+    #search-box{
+        transition: .3px;
+    }
+
     .nav .nav-link, .active {
         color: white;
       }
@@ -9,14 +44,14 @@
 
 <script>
     var id = {{user['id']}};
-    var currentPage = 0
+    var current_page = 0
     window.onload = (e) => {
-        updateSearchResult(currentPage)
+        updateSearchResult(current_page)
     }
 
     const updateSearchResult = (page) => {
-        currentPage = page
-        getSearchResult(currentPage)
+        current_page = page
+        getSearchResult(current_page)
     }
 
     const getSearchResult = (page) => {
@@ -32,7 +67,7 @@
             } else {
                 document.getElementById("nav-like").innerHTML = `<span class="np-font m-5">Wow, such <img src="/static/img/spells/42px-Spell_air_bullet.png"></span>`
             }
-            fetch(`/getUserBuilds/${id}/${currentPage}`, {
+            fetch(`/getUserBuilds/${id}/${current_page}`, {
                 method: "GET"
             })
             .then(response => {
@@ -82,7 +117,7 @@
         })
         .then(() => {
             document.getElementById(`reply-section-${id_parent}`).innerHTML == ""
-            updateSearchResult(currentPage)
+            updateSearchResult(current_page)
         })
     }
     
@@ -121,7 +156,7 @@
             `
         } else {
             document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
-            updateSearchResult(currentPage)
+            updateSearchResult(current_page)
         }
     }
 
@@ -143,7 +178,7 @@
             }
         })
         .then(response => {
-            updateSearchResult(currentPage)
+            updateSearchResult(current_page)
         })  
     }
 
@@ -155,8 +190,8 @@
             }
         })
         .then(response => {
-            document.getElementById('delete-comment-warning').style.display = 'none'
-            updateSearchResult(currentPage)
+            document.getElementById('delete-warning').style.display = 'none'
+            updateSearchResult(current_page)
         })
     }
 
@@ -168,7 +203,7 @@
             }
         })
         .then(response => {
-            updateSearchResult(currentPage)
+            updateSearchResult(current_page)
         })
     }
 
@@ -177,7 +212,7 @@
         comment.classList.add("n-box")
         comment_html = comment.outerHTML
 
-        document.getElementById("delete-comment-warning").innerHTML =
+        document.getElementById("delete-warning").innerHTML =
         `
         <div class="n-box">
             ${comment_html}
@@ -195,13 +230,13 @@
                 <div 
                     class="n-box"
                     style="cursor:pointer;"
-                    onclick="document.getElementById('delete-comment-warning').style.display = 'none';"
+                    onclick="document.getElementById('delete-warning').style.display = 'none';"
                     >Cancel</div>
                 </div> 
             </div>
         `
 
-        document.getElementById("delete-comment-warning").style.display = "flex"
+        document.getElementById("delete-warning").style.display = "flex"
     }
 
     function auto_grow(element) {
@@ -215,6 +250,61 @@
             document.getElementById(element.id+"-warning").innerHTML = ""
         }
       }
+
+      function showDeleteBuild(build_id){
+        build = document.getElementById("build-"+build_id).cloneNode(true)
+
+        //im so sorry future person
+        //REMOVES THE COMMENT SECTION
+        build.children[0].children[3].innerHTML = ""
+        //REMOVES THE DELETE BUILD BUTTON
+        build.children[0].children[0].children[2].innerHTML = ""
+        //REMOVE THE LIKE BUTTON FUNCTIONALITY
+        build.children[0].children[1].children[2].style.cursor = ""
+        build.children[0].children[1].children[2].setAttribute('onclick', '')
+
+        build.classList.add("n-box")
+        build_html = build.outerHTML
+
+        document.getElementById("delete-warning").innerHTML =
+        `
+        <div class="n-box">
+            ${build_html}
+            <div style="text-align:center;">
+                <span>Are you sure you want to delete this build?</span>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a 
+                    onclick="deleteBuild(${build_id})"
+                    class="n-box" 
+                    style="background-color: rgba(198,59,59,0.7); cursor:pointer;">
+                    <span>Delete Build</span>
+                </a>
+
+                <div 
+                    class="n-box"
+                    style="cursor:pointer;"
+                    onclick="document.getElementById('delete-warning').style.display = 'none';"
+                    >Cancel</div>
+                </div> 
+            </div>
+        `
+
+        document.getElementById("delete-warning").style.display = "flex"
+    }
+
+    function deleteBuild(id) {
+        fetch(`/deleteBuild/${id}`,{
+            method: "POST"
+        })
+        .then(response =>{
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById('delete-warning').style.display = 'none'
+            updateSearchResult(current_page)
+        })
+    }
     {%endif%}
 </script>
 
@@ -247,7 +337,7 @@
             <span class="np-font m-5">Wow, such <img src="/static/img/spells/42px-Spell_air_bullet.png"></span>
         </div>
     </div>
-    <aside id="delete-comment-warning" class="warning-screen np-font" style="display:none">
+    <aside id="delete-warning" class="warning-screen np-font" style="display:none">
     </aside>
 </div>
 {% endblock %}

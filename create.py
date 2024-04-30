@@ -83,6 +83,7 @@ def delete_build(id):
     for build in builds:
         if builds[loop]["id"] == id:
             break
+        loop+=1
     else:
         return "Error 10: Build not found."
     builds.pop(loop)

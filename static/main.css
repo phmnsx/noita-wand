@@ -17,7 +17,7 @@ body{
     margin: 0;
     background-color: #191529;
     background-image: url(img/menu-background.png);
-    background-size: contain;
+    background-size: 100% auto;
     background-attachment: fixed;
 }
 

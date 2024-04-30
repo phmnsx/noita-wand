@@ -47,7 +47,12 @@
     ],
     "id": "71940808",
     "img": "https://avatars.githubusercontent.com/u/71940808?v=4",
-    "liked-posts": [87, 93, 46, 12],
+    "liked-posts": [
+      87,
+      93,
+      46,
+      12
+    ],
     "name": "Marco-Aurelio-256"
   },
   {
@@ -55,7 +60,8 @@
       66,
       67,
       73,
-      95
+      95,
+      96
     ],
     "id": "161394779",
     "img": "https://avatars.githubusercontent.com/u/161394779?v=4",

@@ -21,7 +21,7 @@
     "date": "Fri Apr 26 2024 23:47:18",
     "description": "asd",
     "id": 62,
-    "image": "0000",
+    "image": "0001",
     "likes": 1,
     "size": 1,
     "spells": [
@@ -83,7 +83,7 @@
     "description": "Demonio do carai",
     "id": 87,
     "image": "0000",
-    "likes": 0,
+    "likes": -1,
     "size": 6,
     "spells": [
       "ACIDSHOT",
@@ -101,7 +101,7 @@
     "description": "Build n1",
     "id": 93,
     "image": "0336",
-    "likes": 0,
+    "likes": -1,
     "size": 4,
     "spells": [
       "BLACK_HOLE",
@@ -208,7 +208,7 @@
     "description": "xfcgy hbh",
     "id": 117,
     "image": "0000",
-    "likes": 1,
+    "likes": 0,
     "size": 6,
     "spells": [
       "LASER_EMITTER_FOUR",
@@ -254,5 +254,21 @@
       "FUNKY_SPELL"
     ],
     "title": "marco burro"
+  },
+  {
+    "author-id": "71940808",
+    "date": "",
+    "description": "111111111",
+    "id": 97,
+    "image": "0111",
+    "likes": 0,
+    "size": 4,
+    "spells": [
+      "POWERDIGGER",
+      "ACIDSHOT",
+      "ACIDSHOT",
+      "ACIDSHOT"
+    ],
+    "title": "11111111"
   }
 ]

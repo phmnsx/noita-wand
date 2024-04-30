@@ -43,7 +43,7 @@
 </style>
 
 <script>
-    var id = {{user['id']}};
+    var id_user = {{user['id']}};
     var current_page = 0
     window.onload = (e) => {
         updateSearchResult(current_page)
@@ -55,7 +55,7 @@
     }
 
     const getSearchResult = (page) => {
-        fetch(`/getUserLikes/${id}/${page}`, {
+        fetch(`/getUserLikes/${id_user}/${page}`, {
             method: "GET"
         })
         .then(response => {
@@ -67,7 +67,7 @@
             } else {
                 document.getElementById("nav-like").innerHTML = `<span class="np-font m-5">Wow, such <img src="/static/img/spells/42px-Spell_air_bullet.png"></span>`
             }
-            fetch(`/getUserBuilds/${id}/${current_page}`, {
+            fetch(`/getUserBuilds/${id_user}/${current_page}`, {
                 method: "GET"
             })
             .then(response => {
@@ -99,6 +99,7 @@
     }
 
     {% if "user" in login_session %}
+
     const sendReply = (id_parent, id_build) => {
         var date1 = new Date()
         document.getElementById('date-reply-'+id_parent).value = date1
@@ -121,9 +122,16 @@
         })
     }
     
-    const showReply = (id_comment, id_build) => {
-        if (document.getElementById(`reply-section-${id_comment}`).innerHTML == ""){
-            document.getElementById(`reply-section-${id_comment}`).innerHTML =
+    const showReply = (id_comment, id_build, type="") => {
+        if(type == "likes"){
+            reply_section = document.getElementById(`likes-reply-section-${id_comment}`)
+        } else {
+            reply_section = document.getElementById(`likes-reply-section-${id_comment}`)
+        }
+
+        if (reply_section.innerHTML == ""){
+            console.log("CU")
+            reply_section.innerHTML =
             `
             <form id="form-reply-${id_comment}" class="d-flex align-items-center m-4" action="javascript:void(0);">
                 <img class="rounded-circle mx-3" src="{{login_session['user']['img']}}" height="48px">
@@ -162,12 +170,22 @@
 
     const addComment = function(ev) {
         ev.preventDefault()
-        var date1 = new Date()
-        document.getElementById('date-'+this.id).value = date1
-        var date = document.getElementById('date-'+this.id).value
-        var comment = document.getElementById(`comment-${this.id}`).value
-        
-        fetch(`/addComment/${this.id}`,{
+        id = this.id
+        if(id.includes("likes")){
+            id = id.replace("likes-", "")
+            var date1 = new Date()
+            document.getElementById('likes-date-'+id).value = date1
+            var date = document.getElementById('likes-date-'+id).value
+            var comment = document.getElementById(`likes-comment-${id}`).value
+        } else {
+            id = id.replace("likes-", "")
+            var date1 = new Date()
+            document.getElementById('date-'+id).value = date1
+            var date = document.getElementById('date-'+id).value
+            var comment = document.getElementById(`comment-${id}`).value
+        }
+
+        fetch(`/addComment/${id}`,{
             method: "POST",
             body: JSON.stringify({
                 comment: comment,
@@ -177,7 +195,7 @@
                 'Content-type': 'application/json; charset=UTF-8',
             }
         })
-        .then(response => {
+        .then(() => {
             updateSearchResult(current_page)
         })  
     }
@@ -189,7 +207,7 @@
                 'Content-type': 'application/json; charset=UTF-8',
             }
         })
-        .then(response => {
+        .then(() => {
             document.getElementById('delete-warning').style.display = 'none'
             updateSearchResult(current_page)
         })

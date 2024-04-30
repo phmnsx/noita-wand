@@ -18,6 +18,7 @@
     }
 
     .spell-menu{
+        width: fit-content;
         display: grid;
         row-gap: 8px;
         column-gap: 8px;
@@ -136,18 +137,24 @@
             <input id="spell-slots-value" name="spell-slots-value" type="number" value="1" hidden>
             <input id="build-date" name="build-date" type="text" hidden>
             <br> 
-            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Hooray!">Hover</a>
-            <input onclick="submit()" type="button" value="send">
+
+            <input onclick="submit()" class="n-box np-font" type="button" value="Send">
         </div>
     
         
-        <div class="n-box n-column p-5" style="width:100%">
+        <div class="n-box n-column p-5 d-flex flex-column align-items-center" style="width:100%">
+
             <span class="np-font" style="font-size: 32px;">Insert the wand's spells</span>
+
             <span class="np-font">Spells</span>
+
             <input id="spell-list" type="text" name="spell-list" value="" hidden>
+
             <div id="spell-slots" class="spell-slots-frame n-container n-center">           
             </div>
+
             <span class="np-font">Spell list</span>
+
             <div class="spell-menu n-center">
                 {% for spell in spells %} 
                     <a 

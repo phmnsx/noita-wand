@@ -127,4 +127,20 @@ def user_builds(userid):
         userbuilds.reverse()
         return userbuilds
 
-liked_builds("71940808")
+def is_build_user(id, userid):
+    f = open('db.json', encoding="utf8")
+    builds = json.load(f)
+    f.close
+    for build in builds:
+        if build["id"] == id:
+            break
+    f = open('dbusers.json', encoding="utf8")
+    users = json.load(f)
+    f.close()
+    for user in users:
+        if user["id"] == userid:
+            break
+    if build["id"] in user["builds"]:
+        return True
+    else:
+        return False

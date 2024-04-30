@@ -222,7 +222,7 @@ def removeComment(id_comment):
 
 @app.route("/user/<string:id>")
 def userPage(id):
-    updateUser()
+    #updateUser()
     user = main.get_user(id)
     return render_template("userPage.html", user=user, login_session=login_session)
 

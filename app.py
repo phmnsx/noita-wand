@@ -79,12 +79,10 @@ def logout():
 
 @app.route("/builds/search")
 def searchBuild_main():
-    login_session['page-search'] = 0
     return render_template("search.html", page=0, state=updateState(), login_session=login_session)
 
 @app.route("/builds/search/<int:page>")
 def searchBuild(page):
-    login_session['page-search'] = page
     return render_template("search.html", page=page, state=updateState(), login_session=login_session)
 
 @app.route("/builds/searchBySpell")
@@ -95,16 +93,15 @@ def searchBySpell():
     for spl in SPELLS:
         spl['css_type'] = fmts.toCssType(spl)
         spl['img_html'] = fmts.toHTML(spl)
-    login_session['page-search'] = 0
     return render_template("searchbySpell.html", page=0, spells=SPELLS, state=updateState(), login_session=login_session)
 
 @app.route("/builds/getRecentBuilds/<int:page>")
 def getRecentBuilds(page):
-    builds = fmtb.searchPage(page, search=None)
-
+    builds, next_page = fmtb.searchPage(page, search=None)
+    print(next_page)
     if builds == "Invalid Page":
         return redirect("/builds/search")
-    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+    return render_template("buildResult.html", page=page, next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
 
 @app.route("/builds/getBuildBySpell/<int:page>", methods=["GET", "POST"])
 def getBuildBySpell(page):
@@ -116,21 +113,21 @@ def getBuildBySpell(page):
         for spls in list(map(int,request.json['spells'].split(","))):
             currentSpells.append(SPELLS[spls-1]['ID'])
     else:
-        return render_template("buildResult.html", builds="No results.", state=login_session['state'],login_session=login_session)
+        return render_template("buildResult.html", next_page=False, builds="No results.", state=login_session['state'],login_session=login_session)
         
-    builds = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
+    builds, next_page = fmtb.searchPage(page, search=None, spells_list=currentSpells, slots=request.json['slots'])
 
     if builds == "Invalid Page":
         return redirect("/builds/search")
-    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+    return render_template("buildResult.html", next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
 
 @app.route("/builds/getBuildsbyTitle/<int:page>", methods=["GET", "POST"])
 def getBuildsbyTitle(page):
     if request.method == "GET":
-        builds = fmtb.searchPage(page, search=request.args.get('search'))
-        return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+        builds, next_page = fmtb.searchPage(page, search=request.args.get('search'))
+        return render_template("buildResult.html",page=page, next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
     else:
-        return render_template("buildResult.html", builds="No results.", state=login_session['state'], login_session=login_session)
+        return render_template("buildResult.html",page=page, next_page=next_page, builds="No results.", state=login_session['state'], login_session=login_session)
 
 @app.route("/builds/create", methods=["GET", "POST"])
 @login_required
@@ -141,8 +138,12 @@ def createBuild():
 
     if request.method == "POST":
         currentSpells = []
-        for spls in list(map(int,request.form.get('spell-list').split(","))):
-            currentSpells.append(SPELLS[spls-1]['ID'])
+        if len(request.form.get('spell-list')) != 0:
+            for spls in list(map(int,request.form.get('spell-list').split(","))):
+                currentSpells.append(SPELLS[spls-1]['ID'])
+        else:
+            return redirect("/user/<string:id>", )
+
 
         date = request.form.get('build-date')[:24]
         build.create(request.form.get('build-title'), 
@@ -229,25 +230,20 @@ def likeBuild(id):
     if request.method == "GET":
         main.like(login_session['user']['id'], id)
         updateUser()
-        if login_session['page-search'] > 0:
-            return 'redirect("/builds/search/"+str(login_session[`page-search`])+"#build-"+str(id))'
-        else:
-            return 'redirect("/builds/search"+"#build-"+str(id))'
+        return "ok"
     else:
         updateUser()
         return redirect('/')
 
 @app.route("/getUserLikes/<string:id>/<int:page>", methods=["GET"])
 def getUserLikes(id, page):
-    builds = fmtb.searchPage(page, user_id=id, type_user="LIKED")
-    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
+    builds, next_page = fmtb.searchPage(page, user_id=id, type_user="LIKED")
+    return render_template("buildResult.html", page=page, next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
 
 @app.route("/getUserBuilds/<string:id>/<int:page>", methods=["GET"])
 def getUserBuilds(id, page):
-    builds = fmtb.searchPage(page, user_id=id, type_user="CREATED")
-    return render_template("buildResult.html", builds=builds,state=login_session['state'],login_session=login_session)
-
-
+    builds, next_page = fmtb.searchPage(page, user_id=id, type_user="CREATED")
+    return render_template("buildResult.html", page=page, next_page=next_page, builds=builds,state=login_session['state'],login_session=login_session)
 
 def startUser():
     resp = {}

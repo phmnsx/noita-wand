@@ -107,12 +107,12 @@
         document.getElementById('build-date').value = date1
     }
 </script>
-<form id="form" method="POST" action="/builds/create">
+<form id="form" method="POST" action="/builds/create" autocomplete="off">
     <div class="n-container n-center align-items-start">
         <div class="n-box">
             <div class="n-column n-center">
                 <label for="build-title" class="np-font">Title</label>
-                <input id="build-title" name="build-title" type="text" class="np-font n-box" required>
+                <input id="build-title" name="build-title" type="text" class="np-font n-box" autocomplete="off">
                 <br>
                 <span class="np-font">Icon</span>
                 <div class="n-box">

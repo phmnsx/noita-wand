@@ -11,10 +11,16 @@
     var id = {{user['id']}};
     var currentPage = 0
     window.onload = (e) => {
-        getSearchResult()
+        updateSearchResult(currentPage)
     }
-    const getSearchResult = () => {
-        fetch(`/getUserLikes/${id}/${currentPage}`, {
+
+    const updateSearchResult = (page) => {
+        currentPage = page
+        getSearchResult(currentPage)
+    }
+
+    const getSearchResult = (page) => {
+        fetch(`/getUserLikes/${id}/${page}`, {
             method: "GET"
         })
         .then(response => {
@@ -76,7 +82,7 @@
         })
         .then(() => {
             document.getElementById(`reply-section-${id_parent}`).innerHTML == ""
-            getSearchResult()
+            updateSearchResult(currentPage)
         })
     }
     
@@ -115,7 +121,7 @@
             `
         } else {
             document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
-            getSearchResult()
+            updateSearchResult(currentPage)
         }
     }
 
@@ -137,7 +143,7 @@
             }
         })
         .then(response => {
-            getSearchResult()
+            updateSearchResult(currentPage)
         })  
     }
 
@@ -150,7 +156,7 @@
         })
         .then(response => {
             document.getElementById('delete-comment-warning').style.display = 'none'
-            getSearchResult()
+            updateSearchResult(currentPage)
         })
     }
 
@@ -162,7 +168,7 @@
             }
         })
         .then(response => {
-            getSearchResult()
+            updateSearchResult(currentPage)
         })
     }
 
@@ -216,15 +222,19 @@
 <div class="n-box">
     <div class="n-box">
         <img class="rounded-circle" src="{{user['img']}}" height="128px">
-        <span>{{user['name']}}</span>
+        <span class="np-font mx-3">{{user['name']}}</span>
     </div>
 
     <div class="mx-2">
         <div class="nav nav-tabs np-font" style="color: white;" id="nav-tab" role="tablist">
-        <button style="width:50%" class="nav-link active" id="nav-builds-tab" data-bs-toggle="tab" data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="true">
+        <button 
+            onclick="updateSearchResult(0)"
+            style="width:50%" class="nav-link active" id="nav-builds-tab" data-bs-toggle="tab" data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="true">
             Builds
         </button>
-        <button style="width:50%" class="nav-link" id="nav-like-tab" data-bs-toggle="tab" data-bs-target="#nav-like" type="button" role="tab" aria-controls="nav-like" aria-selected="false">
+        <button 
+            onclick="updateSearchResult(0)" 
+            style="width:50%" class="nav-link" id="nav-like-tab" data-bs-toggle="tab" data-bs-target="#nav-like" type="button" role="tab" aria-controls="nav-like" aria-selected="false">
             Liked
         </button>
         </div>

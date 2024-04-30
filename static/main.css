@@ -17,7 +17,8 @@ body{
     margin: 0;
     background-color: #191529;
     background-image: url(img/menu-background.png);
-    background-size: cover;
+    background-size: contain;
+    background-attachment: fixed;
 }
 
 h1{

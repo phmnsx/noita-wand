@@ -39,22 +39,25 @@
 </style>
 
 <script>
+    var current_page = 0
     const TYPE_RECENT = "recent"
     const TYPE_NAME = "name"
     window.onload = (e) => {
-        getRecentBuilds();
+        getRecentBuilds(current_page);
     }
-    const updateSearchResult = () => {
+    const updateSearchResult = (page) => {
         var currentSearchType = document.getElementById("current-search-type").value
-
+        
         if(currentSearchType == TYPE_RECENT){
-            getRecentBuilds()
+            getRecentBuilds(page)
         } else if(currentSearchType == TYPE_NAME){
-            getSearchResult()   
+            getSearchResult(page)   
         }
+
+        current_page = page
     }
-    const getRecentBuilds = () => {
-        fetch(`getRecentBuilds/{{page}}`, {
+    const getRecentBuilds = (page) => {
+        fetch(`getRecentBuilds/${page}`, {
             method: "GET"
         })
         .then(response => {
@@ -100,7 +103,7 @@
         })
         .then(() => {
             document.getElementById(`reply-section-${id_parent}`).innerHTML == ""
-            updateSearchResult()
+            updateSearchResult(current_page)
         })
     }
     
@@ -139,7 +142,7 @@
             `
         } else {
             document.getElementById(`reply-section-${id_comment}`).innerHTML = ""
-            updateSearchResult()
+            updateSearchResult(current_page)
         }
     }
 
@@ -161,7 +164,7 @@
             }
         })
         .then(response => {
-            updateSearchResult()
+            updateSearchResult(current_page)
         })  
     }
 
@@ -174,7 +177,7 @@
         })
         .then(response => {
             document.getElementById('delete-comment-warning').style.display = 'none'
-            updateSearchResult()
+            updateSearchResult(current_page)
         })
     }
 
@@ -186,7 +189,7 @@
             }
         })
         .then(response => {
-            updateSearchResult()
+            updateSearchResult(current_page)
         })
     }
 
@@ -235,9 +238,9 @@
       }
     {%endif%}
 
-    function getSearchResult() {
+    function getSearchResult(page) {
         var search = document.getElementById("search-query").value
-        fetch(`getBuildsbyTitle/{{page}}?search=${search}`, {
+        fetch(`getBuildsbyTitle/${page}?search=${search}`, {
             method: "GET"
         })
         .then(response => {
@@ -274,7 +277,7 @@
             <span class="n-btn-title np-font">Search by Spells</span>
         </a>
     
-        <a onclick="getRecentBuilds()" class="n-btn n-box n-container n-center" style="margin-left: 2%;">
+        <a onclick="getRecentBuilds(0)" class="n-btn n-box n-container n-center" style="margin-left: 2%;">
             <span class="n-btn-title np-font">Recent Builds</span>
         </a>
     </div>
@@ -282,7 +285,7 @@
     <div id="search-box" class="d-flex justify-content-center np-font n-box">
         <input name="search-query" id="search-query" class="n-box w-100" placeholder="Search..." type="text" onclick="getSearchResults(this)">
         <a
-            onclick="getSearchResult()"
+            onclick="getSearchResult(0)"
             style="cursor:pointer;">
             <img class="pi-image" src="/static/search.png" height="64" width="64">
         </a>

@@ -51,23 +51,27 @@ class formatBuild:
                 BUILDS = create.user_builds(user_id)
         else:
             BUILDS = create.get_builds()
+        
+        next_page = False
 
         if type(BUILDS) == list:        
             if page == 0:
-                MIN_PAGE = 0
+                START_POINT = 0
             else:
-                MIN_PAGE = 1+10*page
+                START_POINT = 10*page
 
-            if MIN_PAGE > len(BUILDS):
-                return "Invalid Page"
+            if START_POINT > len(BUILDS):
+                return "No results.", next_page
+            
             
             if len(BUILDS) > 10*page+10:
-                MAX_PAGE = 10*page+10
+                END_POINT = 10*page+10
+                next_page = True
             else:
-                MAX_PAGE = len(BUILDS)
+                END_POINT = len(BUILDS)
 
             spell_form = []
-            builds = BUILDS[MIN_PAGE:MAX_PAGE]
+            builds = BUILDS[START_POINT:END_POINT]
 
             for bld in builds:
                 for id in bld['spells']:
@@ -104,8 +108,8 @@ class formatBuild:
 
                 bld['comments'] = lista
         else:
-            return "No results."
-        return builds
+            return "No results.", next_page
+        return builds, next_page
 
     def create_tree(self,parent):
         parent['children'] = []

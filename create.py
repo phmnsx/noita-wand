@@ -104,9 +104,9 @@ def liked_builds(userid):
             break
     likedbuilds = []
     for build in builds:
-        if build["id"] in founduser["liked-posts"]:
-            likedbuilds.append(build)
-    
+        for i in range(len(founduser["liked-posts"])):
+            if build["id"] in founduser[i]["liked-posts"]:
+                likedbuilds.append(build)
     if len(likedbuilds) == 0:
         return False
     else:

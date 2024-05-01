@@ -61,7 +61,7 @@ def search_name(name):
         return "Error 3: No name inserted."
     r = open('db.json', encoding="utf8")
     search = json.load(r)
-    r.close
+    r.close()
     result = []
     for item in search:
         if name.lower() in item["title"].lower():
@@ -111,7 +111,7 @@ def edit_comment(comment_id, content):
         return "Error 5: Comment too long."
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
-    f.close
+    f.close()
     loop = 0
     for comment in comments:
         if comments[loop]["id"] == comment_id:
@@ -127,7 +127,7 @@ def edit_comment(comment_id, content):
 def delete_comment(comment_id):
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
-    f.close
+    f.close()
 
     loop = 0
     for comment in comments:
@@ -145,7 +145,7 @@ def delete_comment(comment_id):
 def return_comments():
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
-    f.close
+    f.close()
     return comments
 
 def create_report(post_id, user, reported, reason, date):
@@ -193,14 +193,13 @@ def like(user_id, post_id):
     json.dump(users, f, indent=2, sort_keys=True)
     f.close()
     f = open('db.json', 'w', encoding="utf8")
-    f = open('db.json', 'w', encoding="utf8")
     json.dump(builds, f, indent=2, sort_keys=True)
-    f.close
+    f.close()
 
 def get_user(user_id):
     f = open('dbusers.json', encoding="utf8")
     users = json.load(f)
-    f.close
+    f.close()
     loop = 0
     for person in users:
         if users[loop]["id"] == user_id:
@@ -213,7 +212,7 @@ def get_user(user_id):
 def create_user(id, name, img):
     f = open('dbusers.json', encoding="utf8")
     users = json.load(f)
-    f.close
+    f.close()
     newUser = {
     "id": "",
     "name": "",
@@ -234,7 +233,7 @@ def create_user(id, name, img):
 def get_comments(id):
     f = open("dbc.json", encoding="utf8")
     comments = json.load(f)
-    f.close
+    f.close()
     comments.reverse()
     result = []
     for comment in comments:
@@ -245,7 +244,7 @@ def get_comments(id):
 def get_comments_id(id):
     f = open('dbc.json', encoding="utf8")
     comments = json.load(f)
-    f.close
+    f.close()
     comments.reverse()
     for comment in comments:
         if comment["id"] == id:

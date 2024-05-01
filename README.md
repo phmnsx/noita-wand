@@ -27,4 +27,4 @@ A principal ideia desse projeto é ser uma ferramenta software de busca e criaç
 
 Para o desenvolvimento dessa ferramenta o meio web foi decidico como o mais adequado, então já definimos o uso da linguagem de marcação HTML, com o Backend construido em Python escolhemos, por fim, o Flask, principalmente pela sua capacidade de atuar como um intermediário entre o Frontend e Backend e pela suas dependencias como o Jinja que facilitam a construção de páginas dinâmicas. Ainda nas tecnologias usadas, para autenticação de usuários logados ao invés de nossa ferramenta ter um sistema de cadastro de usuário se decidiu usar a API do Github para obtermos uma validação ao login do usuário e dados não-sensivéis do mesmo.
 
-![Alt text](relative%20/static/deleteNolla.png?raw=true "Title")
+![Alt text](/static/deleteNolla.png?raw=true "Title")

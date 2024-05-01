@@ -21,3 +21,10 @@ Spells from the game were also downloaded (via code, or some by hand) from their
 Users have the property of "liked posts" and "builds", that tell the code what posts and builds the user has liked and created.
 The code also adds layers to comments, for example, if i comment directly in a build, it's layer will be 0, but if i comment under a comment, it's layer will be 1 and so on. It's used to keep the page organized for when (complex!) discussions occur.
 Also, if a build has been given no name, the code will automatically give it a name.
+
+### The Frontend
+A principal ideia desse projeto é ser uma ferramenta software de busca e criação de builds para o jogo Noita, para isto, consideramos dois tipos de usuários - visitantes e usuários logados onde visitantes possuem acesso apenas as ferramentas de pesquisas e o usuários logado, as ferramentas de busca e criação de builds. Para exercer as funções desse projeto em software foram idealizadas quatro telas: tela de pesquisa e resultados com e sem filtro de título, tela de pesquisa e resultados com filtro de spells, tela de criação de builds, tela do usuário com as builds criadas e curtidas pelo usuário.
+
+Para o desenvolvimento dessa ferramenta o meio web foi decidico como o mais adequado, então já definimos o uso da linguagem de marcação HTML, com o Backend construido em Python escolhemos, por fim, o Flask, principalmente pela sua capacidade de atuar como um intermediário entre o Frontend e Backend e pela suas dependencias como o Jinja que facilitam a construção de páginas dinâmicas. Ainda nas tecnologias usadas, para autenticação de usuários logados ao invés de nossa ferramenta ter um sistema de cadastro de usuário se decidiu usar a API do Github para obtermos uma validação ao login do usuário e dados não-sensivéis do mesmo.
+
+![Alt text](relative%20/static/deleteNolla.png?raw=true "Title")

@@ -15,3 +15,9 @@ spells.py was made specifically to let the website access the spells database
 create.py was made specifically to handle builds and its actions (Creating, reading, updating, deleting) (CRUD)
 main.py was made for every other aspect, such as comments, reports, and searching
 I also needed to account in errors that might happen so the program wouldn't return something undesirable. I also had to create a .txt file that would act as some sort of global variable, which would be saved even if the code stopped running and could be accessed by multiple files, in order to maintain a consistent ID assignement to posts and comments.
+Builds and comments are created based on the User id and the .txt file, and of course based on what the user wishes to create. The code takes these inputs to make a dictionary in the correct database and assigns it values for identification, mainly ID and author-id.
+Builds and comments are deleted based on their ownership and ID, the code detects if the person looking at the post is it's owner and if they are, it shows them the delete button, which, searches the post by ID on its database then deletes it (or, in the case of comments, pretends its deleted).
+Spells from the game were also downloaded (via code, or some by hand) from their wiki at https://noita.wiki.gg/wiki/Noita_Wiki. And the spell's IDs are used for their indentification.
+Users have the property of "liked posts" and "builds", that tell the code what posts and builds the user has liked and created.
+The code also adds layers to comments, for example, if i comment directly in a build, it's layer will be 0, but if i comment under a comment, it's layer will be 1 and so on. It's used to keep the page organized for when (complex!) discussions occur.
+Also, if a build has been given no name, the code will automatically give it a name.

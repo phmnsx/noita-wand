@@ -204,24 +204,6 @@
   },
   {
     "author-id": "71940808",
-    "date": "Mon Apr 29 2024 20:55:12",
-    "description": "xfcgy hbh",
-    "id": 117,
-    "image": "0000",
-    "likes": 0,
-    "size": 6,
-    "spells": [
-      "LASER_EMITTER_FOUR",
-      "GRENADE_TIER_3",
-      "ROCKET_TIER_3",
-      "METEOR",
-      "ANY_MIST",
-      "RANDOM_PROJECTILE"
-    ],
-    "title": "zserxfy"
-  },
-  {
-    "author-id": "71940808",
     "date": "Mon Apr 29 2024 20:55:44",
     "description": "zzzzzzzzzzzzzzzzzz",
     "id": 118,
@@ -254,21 +236,5 @@
       "FUNKY_SPELL"
     ],
     "title": "marco burro"
-  },
-  {
-    "author-id": "71940808",
-    "date": "",
-    "description": "111111111",
-    "id": 97,
-    "image": "0111",
-    "likes": 1,
-    "size": 4,
-    "spells": [
-      "POWERDIGGER",
-      "ACIDSHOT",
-      "ACIDSHOT",
-      "ACIDSHOT"
-    ],
-    "title": "11111111"
   }
 ]

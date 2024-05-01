@@ -227,7 +227,8 @@
                             <div>
                                 {% if 'user' in login_session %}
                                 {% if cmt['author-id'] == login_session['user']['id'] %}
-                                    <a onclick="showConfirmDeleteComment({{cmt['id']}}, {{bld['id']}})">
+                                    <a onclick="showConfirmDeleteComment({{cmt['id']}}, {{bld['id']}})"
+                                    class="np-font mx-2" style="color: rgb(255,0,0); cursor:pointer">
                                         Delete
                                     </a>
                                 {%endif%}

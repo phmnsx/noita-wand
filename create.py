@@ -10,7 +10,8 @@ build={
     "date": ""
 }
 def create(title, image, spells, date, description, authorid):
-
+    if len(title) > 60:
+        return "Mucho texto"
     if spells == '':
         return "Error 25: No spells selected"
     r = open('db.json', encoding="utf8")
@@ -24,6 +25,8 @@ def create(title, image, spells, date, description, authorid):
     r.close()
     build["id"] = id
     r.close()
+    if len(title.replace(" ", "")) == 0:
+        return create(f"Epic build nº {id}", image, spells, date, description, authorid)
     build["spells"] = spells
     build["size"] = len(build["spells"])
     build["date"] = date

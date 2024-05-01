@@ -254,5 +254,18 @@
       "LIGHT"
     ],
     "title": "Build Title"
+  },
+  {
+    "author-id": "161394779",
+    "date": "Wed May 01 2024 20:38:41",
+    "description": "First wand!",
+    "id": 126,
+    "image": "0667",
+    "likes": 0,
+    "size": 1,
+    "spells": [
+      "DISC_BULLET"
+    ],
+    "title": "Epic build n\u00ba 126"
   }
 ]

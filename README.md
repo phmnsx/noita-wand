@@ -1,5 +1,6 @@
 # Noita Builds
-### Video Demo:
+### Video Demo: 
+https://www.youtube.com/watch?v=_c1IK22G8Eg
 ### Description:
 A site for sharing your favorite Noita builds.
 ## The idea
